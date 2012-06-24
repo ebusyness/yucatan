@@ -4,8 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
-import java.util.SortedMap;
-import java.util.Vector;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -18,6 +16,26 @@ import de.ebusyness.yucatan.core.sequence.generated.SequencesListType;
 public class SequencesManager {
 
 	/**
+	 * Sequence found.
+	 */
+	public final static byte SEQUENCE_FOUND = 0;
+
+	/**
+	 * Sequence not found.
+	 */
+	public final static byte SEQUENCE_FILE_NOT_FOUND = -1;
+
+	/**
+	 * Sequence file format error.
+	 */
+	public final static byte SEQUENCE_FORMAT_ERROR = -2;
+
+	/**
+	 * Sequence file format error.
+	 */
+	public final static byte SEQUENCE_STREAMCLOSE_ERROR = -3;
+
+	/**
 	 * The file name ending for sequences files.
 	 */
 	private final static String FILENAME_ENDING = ".sequences.xml";
@@ -25,63 +43,63 @@ public class SequencesManager {
 	/**
 	 * HashMap of registered sequences.
 	 */
-	private static HashMap<String, Vector<String>> sequences = new HashMap<String, Vector<String>>();
+	private static HashMap<String, SequenceType> sequences = new HashMap<String, SequenceType>();
 
 	/**
 	 * Gets the sequence as Vector from sequences cache.
 	 * 
-	 * @param sequenceLocation The location of sequence to run <module:package/sequenceCollectionName-sequenceName>
+	 * @param sequenceLocation The location of sequence to run <sequenceCollectionName-sequenceName>
 	 * @return the sequence Vector
 	 */
-	public static Vector<String> getSequence(String sequenceLocation) {
+	public static SequenceType getSequence(String sequenceLocation) {
 		String[] parts = sequenceLocation.split("/");
-		String sequenceIdetifier = parts[Math.max(0, parts.length-1)];
-		Vector<String> sequence = sequences.get(sequenceIdetifier);
-		
-		if (sequence == null) {
-			sequence = loadSequence(sequenceLocation, sequenceIdetifier);
-		}
+		String sequenceIdetifier = parts[Math.max(0, parts.length - 1)];
+		SequenceType sequence = sequences.get(sequenceIdetifier);
 		return sequence;
 	}
 
 	/**
-	 * Loads the sequence as Vector from file.
+	 * Loads the sequence from file.
 	 * 
-	 * @param sequenceLocation The location of sequence to run <module:package/sequenceCollectionName-sequenceName>
-	 * @param sequenceIdetifier The full name of the sequence to run <sequenceCollectionName-sequenceName>
-	 * @return the sequence Vector or null
+	 * @param sequenceCollectionName The full name of the sequence to run <sequenceCollectionName>
+	 * @param sequenceLocation The location of sequence to run <packageName>
 	 */
-	private static Vector<String> loadSequence(String sequenceLocation, String sequenceIdetifier) {
-		// resolve <module:package/sequenceCollectionName-sequenceName> to resource name
-		String resourceName = sequenceLocation.replaceAll("(.*)-.*", "$1" + FILENAME_ENDING);
-		String sequenceName = sequenceIdetifier.replaceAll(".*-", "");
+	public static byte registerSequenceCollection(String sequenceCollectionName, String sequenceLocation) {
+		// resolve packageName to full filename
+		String resourceName = sequenceLocation.replaceAll("\\.", "/") + "/" + sequenceCollectionName + FILENAME_ENDING;
+
 		InputStream resourceInputStream = ClassLoader.getSystemResourceAsStream(resourceName);
-		SequencesListType sequences = null;
+
+		System.out.println("resourceName: " + resourceName);
+		System.out.println("resourceInputStream: " + resourceInputStream);
+
 		if (resourceInputStream == null) {
-			return null;
+			return SEQUENCE_FILE_NOT_FOUND;
 		}
+		SequencesListType sequences = null;
+
 		try {
 			sequences = unmarshalSequencesInputStream(SequencesListType.class, resourceInputStream);
 		} catch (JAXBException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
-			return null;
+			return SEQUENCE_FORMAT_ERROR;
 		} finally {
 			try {
 				resourceInputStream.close();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
+				return SEQUENCE_STREAMCLOSE_ERROR;
 			}
 		}
 		List<SequenceType> sequenesList = sequences.getSequence();
 		for (SequenceType sequence : sequenesList) {
-			System.out.println( sequence.getName());
-			if(sequenceName == sequence.getName()) {
-				System.out.println( "sequence found: "+sequenceName);
-			}
+			System.out.println("sequence registered: " + sequenceCollectionName + "-" + sequence.getId());
+			SequencesManager.sequences.put(sequenceCollectionName + "-" + sequence.getId(), sequence);
+
 		}
-		return new Vector<String>();
+
+		return SEQUENCE_FOUND;
 	}
 
 	/**

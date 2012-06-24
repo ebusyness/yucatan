@@ -10,7 +10,7 @@ public class TestCommand {
 
 	@Test
 	public void testExecute() {
-		assertEquals(Command.COMMAND_ERROR, Command.execute());
+		assertEquals(Command.COMMAND_SEQUENCE_NOT_FOUND, Command.execute());
 	}
 
 }
