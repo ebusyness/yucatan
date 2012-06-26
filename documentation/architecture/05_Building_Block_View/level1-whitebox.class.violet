@@ -1,0 +1,442 @@
+<?xml version="1.0" encoding="UTF-8"?> 
+<java version="1.6.0_32" class="java.beans.XMLDecoder"> 
+ <object class="com.horstmann.violet.ClassDiagramGraph"> 
+  <void method="addNode"> 
+   <object id="PackageNode0" class="com.horstmann.violet.PackageNode"> 
+    <void property="bounds"> 
+     <object class="java.awt.geom.Rectangle2D$Double"> 
+      <void method="setRect"> 
+       <double>320.0</double> 
+       <double>140.0</double> 
+       <double>120.0</double> 
+       <double>80.0</double> 
+      </void> 
+     </object> 
+    </void> 
+    <void property="bounds"> 
+     <void method="setRect"> 
+      <double>320.0</double> 
+      <double>140.0</double> 
+      <double>120.0</double> 
+      <double>80.0</double> 
+     </void> 
+    </void> 
+    <void property="name"> 
+     <string>communication</string> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>320.0</double> 
+     <double>140.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="PackageNode1" class="com.horstmann.violet.PackageNode"> 
+    <void property="bounds"> 
+     <object class="java.awt.geom.Rectangle2D$Double"> 
+      <void method="setRect"> 
+       <double>610.0</double> 
+       <double>290.0</double> 
+       <double>140.0</double> 
+       <double>80.0</double> 
+      </void> 
+     </object> 
+    </void> 
+    <void property="bounds"> 
+     <void method="setRect"> 
+      <double>610.0</double> 
+      <double>290.0</double> 
+      <double>140.0</double> 
+      <double>80.0</double> 
+     </void> 
+    </void> 
+    <void property="name"> 
+     <string>process controller</string> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>610.0</double> 
+     <double>290.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="PackageNode2" class="com.horstmann.violet.PackageNode"> 
+    <void property="bounds"> 
+     <object class="java.awt.geom.Rectangle2D$Double"> 
+      <void method="setRect"> 
+       <double>320.0</double> 
+       <double>430.0</double> 
+       <double>100.0</double> 
+       <double>80.0</double> 
+      </void> 
+     </object> 
+    </void> 
+    <void property="bounds"> 
+     <void method="setRect"> 
+      <double>320.0</double> 
+      <double>430.0</double> 
+      <double>100.0</double> 
+      <double>80.0</double> 
+     </void> 
+    </void> 
+    <void property="name"> 
+     <string>persistance</string> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>320.0</double> 
+     <double>430.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="ClassNode0" class="com.horstmann.violet.ClassNode"> 
+    <void property="bounds"> 
+     <object class="java.awt.geom.Rectangle2D$Double"> 
+      <void method="setRect"> 
+       <double>360.0</double> 
+       <double>580.0</double> 
+       <double>100.0</double> 
+       <double>100.0</double> 
+      </void> 
+     </object> 
+    </void> 
+    <void property="attributes"> 
+     <void property="text"> 
+      <string>id
+alias</string> 
+     </void> 
+    </void> 
+    <void property="methods"> 
+     <void property="text"> 
+      <string>getId
+getAlias
+setAlias</string> 
+     </void> 
+    </void> 
+    <void property="name"> 
+     <void property="text"> 
+      <string>BusinessObject</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>360.0</double> 
+     <double>580.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="NoteNode0" class="com.horstmann.violet.NoteNode"> 
+    <void property="bounds"> 
+     <object class="java.awt.geom.Rectangle2D$Double"> 
+      <void method="setRect"> 
+       <double>840.0</double> 
+       <double>310.0</double> 
+       <double>160.0</double> 
+       <double>40.0</double> 
+      </void> 
+     </object> 
+    </void> 
+    <void property="bounds"> 
+     <void method="setRect"> 
+      <double>840.0</double> 
+      <double>310.0</double> 
+      <double>160.0</double> 
+      <double>40.0</double> 
+     </void> 
+    </void> 
+    <void property="text"> 
+     <void property="text"> 
+      <string>configuration
+&lt;mycontext&gt;.sequences.xml</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>840.0</double> 
+     <double>310.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.PointNode"> 
+    <void property="bounds"> 
+     <object class="java.awt.geom.Rectangle2D$Double"> 
+      <void method="setRect"> 
+       <double>741.0</double> 
+       <double>350.0</double> 
+       <double>0.0</double> 
+       <double>0.0</double> 
+      </void> 
+     </object> 
+    </void> 
+    <void property="bounds"> 
+     <void method="setRect"> 
+      <double>741.0</double> 
+      <double>350.0</double> 
+      <double>0.0</double> 
+      <double>0.0</double> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>741.0</double> 
+     <double>350.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object id="NoteNode1" class="com.horstmann.violet.NoteNode"> 
+    <void property="bounds"> 
+     <object class="java.awt.geom.Rectangle2D$Double"> 
+      <void method="setRect"> 
+       <double>530.0</double> 
+       <double>580.0</double> 
+       <double>100.0</double> 
+       <double>40.0</double> 
+      </void> 
+     </object> 
+    </void> 
+    <void property="bounds"> 
+     <void method="setRect"> 
+      <double>530.0</double> 
+      <double>580.0</double> 
+      <double>100.0</double> 
+      <double>40.0</double> 
+     </void> 
+    </void> 
+    <void property="text"> 
+     <void property="text"> 
+      <string>configuration
+businessobject.xml</string> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>530.0</double> 
+     <double>580.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.PointNode"> 
+    <void property="bounds"> 
+     <object class="java.awt.geom.Rectangle2D$Double"> 
+      <void method="setRect"> 
+       <double>430.0</double> 
+       <double>495.0</double> 
+       <double>0.0</double> 
+       <double>0.0</double> 
+      </void> 
+     </object> 
+    </void> 
+    <void property="bounds"> 
+     <void method="setRect"> 
+      <double>430.0</double> 
+      <double>495.0</double> 
+      <double>0.0</double> 
+      <double>0.0</double> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>430.0</double> 
+     <double>495.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.PointNode"> 
+    <void property="bounds"> 
+     <object class="java.awt.geom.Rectangle2D$Double"> 
+      <void method="setRect"> 
+       <double>741.0</double> 
+       <double>350.0</double> 
+       <double>0.0</double> 
+       <double>0.0</double> 
+      </void> 
+     </object> 
+    </void> 
+    <void property="bounds"> 
+     <void method="setRect"> 
+      <double>741.0</double> 
+      <double>350.0</double> 
+      <double>0.0</double> 
+      <double>0.0</double> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>741.0</double> 
+     <double>350.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="addNode"> 
+   <object class="com.horstmann.violet.PointNode"> 
+    <void property="bounds"> 
+     <object class="java.awt.geom.Rectangle2D$Double"> 
+      <void method="setRect"> 
+       <double>430.0</double> 
+       <double>495.0</double> 
+       <double>0.0</double> 
+       <double>0.0</double> 
+      </void> 
+     </object> 
+    </void> 
+    <void property="bounds"> 
+     <void method="setRect"> 
+      <double>430.0</double> 
+      <double>495.0</double> 
+      <double>0.0</double> 
+      <double>0.0</double> 
+     </void> 
+    </void> 
+   </object> 
+   <object class="java.awt.geom.Point2D$Double"> 
+    <void method="setLocation"> 
+     <double>430.0</double> 
+     <double>495.0</double> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    </void> 
+    <void property="middleLabel"> 
+     <string>messages / output data</string> 
+    </void> 
+   </object> 
+   <object idref="PackageNode1"/> 
+   <object idref="PackageNode0"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="bentStyle"> 
+     <object class="com.horstmann.violet.BentStyle" field="HV"/> 
+    </void> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    </void> 
+    <void property="middleLabel"> 
+     <string>input data</string> 
+    </void> 
+   </object> 
+   <object idref="PackageNode0"/> 
+   <object idref="PackageNode1"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="bentStyle"> 
+     <object class="com.horstmann.violet.BentStyle" field="VH"/> 
+    </void> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    </void> 
+   </object> 
+   <object idref="PackageNode1"/> 
+   <object idref="PackageNode2"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="bentStyle"> 
+     <object class="com.horstmann.violet.BentStyle" field="HV"/> 
+    </void> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    </void> 
+    <void property="middleLabel"> 
+     <string>data</string> 
+    </void> 
+   </object> 
+   <object idref="PackageNode2"/> 
+   <object idref="PackageNode1"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="bentStyle"> 
+     <object class="com.horstmann.violet.BentStyle" field="HVH"/> 
+    </void> 
+    <void property="endArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="V"/> 
+    </void> 
+    <void property="middleLabel"> 
+     <string>transport objects</string> 
+    </void> 
+   </object> 
+   <object idref="PackageNode1"/> 
+   <object idref="PackageNode1"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.ClassRelationshipEdge"> 
+    <void property="startArrowHead"> 
+     <object class="com.horstmann.violet.ArrowHead" field="DIAMOND"/> 
+    </void> 
+   </object> 
+   <object idref="PackageNode2"/> 
+   <object idref="ClassNode0"/> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.NoteEdge"/> 
+   <object idref="NoteNode0"/> 
+   <object class="com.horstmann.violet.PointNode"> 
+    <void property="bounds"> 
+     <object class="java.awt.geom.Rectangle2D$Double"> 
+      <void method="setRect"> 
+       <double>741.0</double> 
+       <double>350.0</double> 
+       <double>0.0</double> 
+       <double>0.0</double> 
+      </void> 
+     </object> 
+    </void> 
+    <void property="bounds"> 
+     <void method="setRect"> 
+      <double>741.0</double> 
+      <double>350.0</double> 
+      <double>0.0</double> 
+      <double>0.0</double> 
+     </void> 
+    </void> 
+   </object> 
+  </void> 
+  <void method="connect"> 
+   <object class="com.horstmann.violet.NoteEdge"/> 
+   <object idref="NoteNode1"/> 
+   <object class="com.horstmann.violet.PointNode"> 
+    <void property="bounds"> 
+     <object class="java.awt.geom.Rectangle2D$Double"> 
+      <void method="setRect"> 
+       <double>430.0</double> 
+       <double>495.0</double> 
+       <double>0.0</double> 
+       <double>0.0</double> 
+      </void> 
+     </object> 
+    </void> 
+    <void property="bounds"> 
+     <void method="setRect"> 
+      <double>430.0</double> 
+      <double>495.0</double> 
+      <double>0.0</double> 
+      <double>0.0</double> 
+     </void> 
+    </void> 
+   </object> 
+  </void> 
+ </object> 
+</java> 

@@ -24,7 +24,7 @@ public abstract class Command {
 	 * @return return code
 	 */
 	public static byte execute() {
-		return COMMAND_ERROR;
+		return COMMAND_SEQUENCE_NOT_FOUND;
 	}
 
 }

@@ -2,9 +2,11 @@ package de.ebusyness.yucatan.core.sequence;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Vector;
+import java.util.List;
 
 import de.ebusyness.yucatan.core.Command;
+import de.ebusyness.yucatan.core.sequence.generated.CommandType;
+import de.ebusyness.yucatan.core.sequence.generated.SequenceType;
 
 /**
  * sequence runner
@@ -19,13 +21,14 @@ public class SequenceRunner extends Command {
 	 * @return true or false
 	 */
 	public static byte execute(String sequenceLocation) {
-		Vector<String> sequence = SequencesManager.getSequence( sequenceLocation);
-		if( sequence == null ) {
+		SequenceType sequenceDeclaration = SequencesManager.getSequence(sequenceLocation);
+		if( sequenceDeclaration == null ) {
 			return Command.COMMAND_SEQUENCE_NOT_FOUND;
 		}
-		for (String commandKey : sequence) {
+		List<CommandType> commandsDeclaration = sequenceDeclaration.getCommands();
+		for (CommandType commandDeclaration : commandsDeclaration) {
 			try {
-				Class<?> currentClass = Class.forName(commandKey);
+				Class<?> currentClass = Class.forName(commandDeclaration.getId());
 				Class<? extends Command> castedClass = currentClass.asSubclass(Command.class);
 				Method excecuteMethod = null;
 				try {
