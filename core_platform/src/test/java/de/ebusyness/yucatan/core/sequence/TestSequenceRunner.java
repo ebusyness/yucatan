@@ -21,6 +21,9 @@ public class TestSequenceRunner {
 		// if no sequence identifier was specified return with COMMAND_SEQUENCE_NOT_FOUND
 		assertEquals(Command.COMMAND_SEQUENCE_NOT_FOUND, SequenceRunner.execute());
 
+		// null parameter check - return with COMMAND_SEQUENCE_NOT_FOUND
+		assertEquals(Command.COMMAND_SEQUENCE_NOT_FOUND, SequenceRunner.execute(null));
+
 		// if an invalid sequence identifier was specified return with COMMAND_SEQUENCE_NOT_FOUND
 		assertEquals(Command.COMMAND_SEQUENCE_NOT_FOUND, SequenceRunner.execute("sequence_not_found-test"));
 

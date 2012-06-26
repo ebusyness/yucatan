@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<invalid>
-<sequences name="category">
-	<sequence target="show">
-		<command name="de.ebusyness.yucatan.core_platform.prototyping.category.GetCategoryCommand" position="10.00"/>
-	</sequence>
-</sequences>
-</invalid>

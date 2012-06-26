@@ -21,6 +21,9 @@ public class SequenceRunner extends Command {
 	 * @return true or false
 	 */
 	public static byte execute(String sequenceLocation) {
+		if (sequenceLocation == null) {
+			return COMMAND_SEQUENCE_NOT_FOUND;
+		}
 		SequenceType sequenceDeclaration = SequencesManager.getSequence(sequenceLocation);
 		if( sequenceDeclaration == null ) {
 			return Command.COMMAND_SEQUENCE_NOT_FOUND;

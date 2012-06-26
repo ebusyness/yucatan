@@ -52,6 +52,9 @@ public class SequencesManager {
 	 * @return the sequence Vector
 	 */
 	public static SequenceType getSequence(String sequenceLocation) {
+		if (sequenceLocation == null) {
+			return null;
+		}
 		String[] parts = sequenceLocation.split("/");
 		String sequenceIdetifier = parts[Math.max(0, parts.length - 1)];
 		SequenceType sequence = sequences.get(sequenceIdetifier);
@@ -65,6 +68,9 @@ public class SequencesManager {
 	 * @param sequenceLocation The location of sequence to run <packageName>
 	 */
 	public static byte registerSequenceCollection(String sequenceCollectionName, String sequenceLocation) {
+		if (sequenceCollectionName == null || sequenceLocation == null) {
+			return SEQUENCE_FILE_NOT_FOUND;
+		}
 		// resolve packageName to full filename
 		String resourceName = sequenceLocation.replaceAll("\\.", "/") + "/" + sequenceCollectionName + FILENAME_ENDING;
 
@@ -87,7 +93,6 @@ public class SequencesManager {
 			try {
 				resourceInputStream.close();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 				return SEQUENCE_STREAMCLOSE_ERROR;
 			}
