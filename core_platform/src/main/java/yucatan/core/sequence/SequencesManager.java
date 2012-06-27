@@ -10,8 +10,8 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
-import yucatan.core.sequence.generated.SequenceType;
-import yucatan.core.sequence.generated.SequencesListType;
+import yucatan.core.sequence.generated.XmlTypeSequence;
+import yucatan.core.sequence.generated.XmlTypeSequencesList;
 
 
 public class SequencesManager {
@@ -44,29 +44,29 @@ public class SequencesManager {
 	/**
 	 * HashMap of registered sequences.
 	 */
-	private static HashMap<String, SequenceType> sequences = new HashMap<String, SequenceType>();
+	private static HashMap<String, XmlTypeSequence> sequences = new HashMap<String, XmlTypeSequence>();
 
 	/**
-	 * Gets the sequence as Vector from sequences cache.
+	 * Gets the sequence from sequences cache.
 	 * 
-	 * @param sequenceLocation The location of sequence to run <sequenceCollectionName-sequenceName>
-	 * @return the sequence Vector
+	 * @param sequenceLocation The location of sequence to run &lt;sequenceCollectionName-sequenceName&gt;
+	 * @return the sequence
 	 */
-	public static SequenceType getSequence(String sequenceLocation) {
+	public static XmlTypeSequence getSequence(String sequenceLocation) {
 		if (sequenceLocation == null) {
 			return null;
 		}
 		String[] parts = sequenceLocation.split("/");
 		String sequenceIdetifier = parts[Math.max(0, parts.length - 1)];
-		SequenceType sequence = sequences.get(sequenceIdetifier);
+		XmlTypeSequence sequence = sequences.get(sequenceIdetifier);
 		return sequence;
 	}
 
 	/**
 	 * Loads the sequence from file.
 	 * 
-	 * @param sequenceCollectionName The full name of the sequence to run <sequenceCollectionName>
-	 * @param sequenceLocation The location of sequence to run <packageName>
+	 * @param sequenceCollectionName The full name of the sequence to run &lt;sequenceCollectionName&gt;
+	 * @param sequenceLocation The location of sequence to run &ltpackageName&gt;
 	 */
 	public static byte registerSequenceCollection(String sequenceCollectionName, String sequenceLocation) {
 		if (sequenceCollectionName == null || sequenceLocation == null) {
@@ -77,16 +77,13 @@ public class SequencesManager {
 
 		InputStream resourceInputStream = ClassLoader.getSystemResourceAsStream(resourceName);
 
-		System.out.println("resourceName: " + resourceName);
-		System.out.println("resourceInputStream: " + resourceInputStream);
-
 		if (resourceInputStream == null) {
 			return SEQUENCE_FILE_NOT_FOUND;
 		}
-		SequencesListType sequences = null;
+		XmlTypeSequencesList sequences = null;
 
 		try {
-			sequences = unmarshalSequencesInputStream(SequencesListType.class, resourceInputStream);
+			sequences = unmarshalSequencesInputStream(XmlTypeSequencesList.class, resourceInputStream);
 		} catch (JAXBException e) {
 			e.printStackTrace();
 			return SEQUENCE_FORMAT_ERROR;
@@ -98,11 +95,11 @@ public class SequencesManager {
 				return SEQUENCE_STREAMCLOSE_ERROR;
 			}
 		}
-		List<SequenceType> sequenesList = sequences.getSequence();
-		for (SequenceType sequence : sequenesList) {
-			System.out.println("sequence registered: " + sequenceCollectionName + "-" + sequence.getId());
+		List<XmlTypeSequence> sequenesList = sequences.getSequence();
+		for (XmlTypeSequence sequence : sequenesList) {
+			// TODO logging
+			// System.out.println("sequence registered: " + sequenceCollectionName + "-" + sequence.getId());
 			SequencesManager.sequences.put(sequenceCollectionName + "-" + sequence.getId(), sequence);
-
 		}
 
 		return SEQUENCE_FOUND;
@@ -116,12 +113,12 @@ public class SequencesManager {
 	 * @return
 	 * @throws JAXBException
 	 */
-	private static SequencesListType unmarshalSequencesInputStream(Class<SequencesListType> docClass, InputStream resourceInputStream) throws JAXBException {
+	private static XmlTypeSequencesList unmarshalSequencesInputStream(Class<XmlTypeSequencesList> docClass, InputStream resourceInputStream) throws JAXBException {
 		String packageName = docClass.getPackage().getName();
 		JAXBContext jc = JAXBContext.newInstance(packageName);
 		Unmarshaller u = jc.createUnmarshaller();
 		@SuppressWarnings("unchecked")
-		JAXBElement<SequencesListType> doc = (JAXBElement<SequencesListType>) u.unmarshal(resourceInputStream); // cast TODO Check this again
+		JAXBElement<XmlTypeSequencesList> doc = (JAXBElement<XmlTypeSequencesList>) u.unmarshal(resourceInputStream); // cast TODO Check this again
 		return doc.getValue();
 	}
 }

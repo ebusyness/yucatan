@@ -5,8 +5,8 @@ import java.lang.reflect.Method;
 import java.util.List;
 
 import yucatan.core.Command;
-import yucatan.core.sequence.generated.CommandType;
-import yucatan.core.sequence.generated.SequenceType;
+import yucatan.core.sequence.generated.XmlTypeCommand;
+import yucatan.core.sequence.generated.XmlTypeSequence;
 
 
 /**
@@ -25,14 +25,14 @@ public class SequenceRunner extends Command {
 		if (sequenceLocation == null) {
 			return COMMAND_SEQUENCE_NOT_FOUND;
 		}
-		SequenceType sequenceDeclaration = SequencesManager.getSequence(sequenceLocation);
+		XmlTypeSequence sequenceDeclaration = SequencesManager.getSequence(sequenceLocation);
 		if( sequenceDeclaration == null ) {
 			return Command.COMMAND_SEQUENCE_NOT_FOUND;
 		}
-		List<CommandType> commandsDeclaration = sequenceDeclaration.getCommands();
-		for (CommandType commandDeclaration : commandsDeclaration) {
+		List<XmlTypeCommand> commandsDeclaration = sequenceDeclaration.getCommand();
+		for (XmlTypeCommand commandDeclaration : commandsDeclaration) {
 			try {
-				Class<?> currentClass = Class.forName(commandDeclaration.getId());
+				Class<?> currentClass = Class.forName(commandDeclaration.getName());
 				Class<? extends Command> castedClass = currentClass.asSubclass(Command.class);
 				Method excecuteMethod = null;
 				try {

@@ -2,7 +2,7 @@
 <invalidtag>
 	<sequences name="category">
 		<sequence target="show">
-			<command name="yucatan.core_platform.prototyping.category.GetCategoryCommand" position="10.00" />
+			<command name="yucatan.core.category.GetCategoryCommand" position="10.00" />
 		</sequence>
 	</sequences>
 </invalidtag>

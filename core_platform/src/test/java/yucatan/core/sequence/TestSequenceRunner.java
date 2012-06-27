@@ -6,9 +6,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import yucatan.core.Command;
-import yucatan.core.sequence.SequenceRunner;
-import yucatan.core.sequence.SequencesManager;
-
 
 public class TestSequenceRunner {
 
@@ -20,7 +17,6 @@ public class TestSequenceRunner {
 
 	@Test
 	public void testExecute() {
-
 		// if no sequence identifier was specified return with COMMAND_SEQUENCE_NOT_FOUND
 		assertEquals(Command.COMMAND_SEQUENCE_NOT_FOUND, SequenceRunner.execute());
 

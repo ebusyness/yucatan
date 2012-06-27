@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <sequences id="category">
 	<sequence id="show">
-		<command id="yucatan.core_platform.prototyping.category.GetCategoryCommand" position="10.00" />
+		<command name="yucatan.core.category.GetCategoryCommand" position="10.00" />
+		<command name="yucatan.core.category.ModifyCategoryCommand" position="20.00" />
 	</sequence>
 </sequences>
 
