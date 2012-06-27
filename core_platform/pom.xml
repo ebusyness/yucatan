@@ -2,7 +2,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>de.ebusyness.yucatan</groupId>
+	<groupId>yucatan</groupId>
 	<artifactId>yucatan_core_platform</artifactId>
 	<version>0.1.in-development</version>
 
@@ -28,7 +28,7 @@
 						</goals>
 						<configuration>
 							<!-- Changes the default schema directory -->
-							<schemaDirectory>src/main/resources/de/ebusyness/yucatan/core/schemas</schemaDirectory>
+							<schemaDirectory>src/main/resources/yucatan/core/schemas</schemaDirectory>
 							<schemaIncludes>
 								<include>*.xsd</include>
 							</schemaIncludes>

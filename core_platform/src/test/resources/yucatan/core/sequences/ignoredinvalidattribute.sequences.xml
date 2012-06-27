@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sequences id="category" invalidattribute="invalid">
+	<sequence id="show" invalidattribute="invalid">
+		<command id="yucatan.core_platform.prototyping.category.GetCategoryCommand" position="10.00" invalidattribute="invalid" />
+	</sequence>
+</sequences>
+

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+xmlns:jxb="http://java.sun.com/xml/ns/jaxb"
+jxb:version="2.0">
+
+	<xsd:annotation>
+		<xsd:appinfo>
+			<jxb:schemaBindings>
+				<jxb:package name="yucatan.core.sequence.generated">
+					<!-- <jxb:javadoc><![CDATA[<body> Package level documentation for
+					generated package yucatan.core.sequence.generated.</body>]]>
+					</jxb:javadoc> -->
+				</jxb:package>
+				<jxb:nameXmlTransform>
+					<jxb:elementName suffix="Element"/>
+				</jxb:nameXmlTransform>
+			</jxb:schemaBindings>
+		</xsd:appinfo>
+	</xsd:annotation>
+	<xsd:element name="sequences" type="SequencesListType"/>
+	<xsd:complexType name="SequencesListType">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" name="sequence" type="SequenceType"/>
+		</xsd:sequence>
+		<xsd:attribute name="id" type="xsd:string"/>
+	</xsd:complexType>
+	<xsd:complexType name="SequenceType">
+		<xsd:sequence>
+			<xsd:element maxOccurs="unbounded" name="commands" type="CommandType"></xsd:element>
+		</xsd:sequence>
+		<xsd:attribute name="id" type="xsd:string"/>
+	</xsd:complexType>
+	<xsd:complexType name="CommandType">
+		<xsd:attribute name="id" type="xsd:string"/>
+		<xsd:attribute name="position" type="xsd:float"/>
+	</xsd:complexType>
+</xsd:schema>
+
