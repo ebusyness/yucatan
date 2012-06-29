@@ -2,6 +2,7 @@ package yucatan.core.sequence;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -10,9 +11,9 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import yucatan.core.sequence.generated.XmlTypeCommand;
 import yucatan.core.sequence.generated.XmlTypeSequence;
 import yucatan.core.sequence.generated.XmlTypeSequencesList;
-
 
 public class SequencesManager {
 
@@ -60,6 +61,28 @@ public class SequencesManager {
 		String sequenceIdetifier = parts[Math.max(0, parts.length - 1)];
 		XmlTypeSequence sequence = sequences.get(sequenceIdetifier);
 		return sequence;
+	}
+
+	/**
+	 * Returns all sequence item names.
+	 * 
+	 * @param sequenceLocation The location of sequence to run &lt;sequenceCollectionName-sequenceName&gt;
+	 * @return the sequence
+	 */
+	public static ArrayList<String> inspectSequence(String sequenceLocation) {
+		if (sequenceLocation == null) {
+			return null;
+		}
+		ArrayList<String> sequenceItems = new ArrayList<String>();
+		String[] parts = sequenceLocation.split("/");
+		String sequenceIdetifier = parts[Math.max(0, parts.length - 1)];
+
+		XmlTypeSequence sequenceDeclaration = sequences.get(sequenceIdetifier);
+		List<XmlTypeCommand> commandsDeclaration = sequenceDeclaration.getCommand();
+		for (XmlTypeCommand commandDeclaration : commandsDeclaration) {
+			sequenceItems.add(commandDeclaration.getName());
+		}
+		return sequenceItems;
 	}
 
 	/**

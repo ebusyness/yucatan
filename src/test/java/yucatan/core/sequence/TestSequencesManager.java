@@ -2,6 +2,7 @@ package yucatan.core.sequence;
 
 import static org.junit.Assert.assertEquals;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Assert;
@@ -41,6 +42,23 @@ public class TestSequencesManager {
 		XmlTypeSequence sequence = SequencesManager.getSequence("category-show");
 		List<XmlTypeCommand> commandsDeclaration = sequence.getCommand();
 		assertEquals(2, commandsDeclaration.size());
+	}
+
+	/**
+	 * Test method for {@link yucatan.core.sequence.SequencesManager#inspectSequence(java.lang.String)}.
+	 */
+	@Test
+	public void testInspectSequence() {
+
+		// prepare register test sequence collection
+		SequencesManager.registerSequenceCollection("category", "yucatan.core.sequences");
+		ArrayList<String> sequenceItemNames = SequencesManager.inspectSequence("category-show");
+		String resultString = "";
+		for (String sequenceItemName : sequenceItemNames) {
+			resultString += sequenceItemName;
+			resultString += "+";
+		}
+		Assert.assertEquals("yucatan.core.category.GetCategoryCommand+yucatan.core.category.ModifyCategoryCommand+", resultString);
 	}
 
 }
