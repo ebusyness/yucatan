@@ -19,22 +19,22 @@ public class SequencesManager {
 	/**
 	 * Sequence found.
 	 */
-	public final static byte SEQUENCE_FOUND = 0;
+	public final static String SEQUENCE_FOUND = "SEQUENCE_FOUND";
 
 	/**
 	 * Sequence not found.
 	 */
-	public final static byte SEQUENCE_FILE_NOT_FOUND = -1;
+	public final static String SEQUENCE_FILE_NOT_FOUND = "SEQUENCE_FILE_NOT_FOUND";
 
 	/**
 	 * Sequence file format error.
 	 */
-	public final static byte SEQUENCE_FORMAT_ERROR = -2;
+	public final static String SEQUENCE_FORMAT_ERROR = "SEQUENCE_FORMAT_ERROR";
 
 	/**
 	 * Sequence file format error.
 	 */
-	public final static byte SEQUENCE_STREAMCLOSE_ERROR = -3;
+	public final static String SEQUENCE_STREAMCLOSE_ERROR = "SEQUENCE_STREAMCLOSE_ERROR";
 
 	/**
 	 * The file name ending for sequences files.
@@ -68,7 +68,7 @@ public class SequencesManager {
 	 * @param sequenceCollectionName The full name of the sequence to run &lt;sequenceCollectionName&gt;
 	 * @param sequenceLocation The location of sequence to run &ltpackageName&gt;
 	 */
-	public static byte registerSequenceCollection(String sequenceCollectionName, String sequenceLocation) {
+	public static String registerSequenceCollection(String sequenceCollectionName, String sequenceLocation) {
 		if (sequenceCollectionName == null || sequenceLocation == null) {
 			return SEQUENCE_FILE_NOT_FOUND;
 		}

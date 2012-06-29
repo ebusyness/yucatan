@@ -6,24 +6,24 @@ package yucatan.core;
 public abstract class Command {
 
 	/**
+	 * Command returned without error.
+	 */
+	public static final String COMMAND_EXECUTION_OK = "COMMAND_EXECUTION_OK";
+
+	/**
 	 * Command finished with error.
 	 */
-	public static byte COMMAND_ERROR = -1;
-	
+	public static final String COMMAND_EXECUTION_ERROR = "COMMAND_EXECUTION_ERROR";
+
 	/**
 	 * Command sequence not found.
 	 */
-	public static byte COMMAND_SEQUENCE_NOT_FOUND = -2;
-
-	/**
-	 * command return code ok
-	 */
-	public static byte COMMAND_OK = 0;
+	public static final String COMMAND_SEQUENCE_NOT_FOUND = "COMMAND_SEQUENCE_NOT_FOUND";
 
 	/**
 	 * @return return code
 	 */
-	public static byte execute() {
+	public static String execute() {
 		return COMMAND_SEQUENCE_NOT_FOUND;
 	}
 

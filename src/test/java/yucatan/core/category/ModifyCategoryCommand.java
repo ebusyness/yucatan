@@ -15,7 +15,8 @@ public class ModifyCategoryCommand extends Command {
 	 * 
 	 * @return Return code
 	 */
-	public static byte execute() {
-		return Command.COMMAND_OK;
+	public static String execute() {
+		// System.out.println("ModifyCategoryCommand.execute()");
+		return Command.COMMAND_EXECUTION_OK;
 	}
 }
