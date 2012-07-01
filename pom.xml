@@ -32,7 +32,8 @@
 							<schemaIncludes>
 								<include>*.xsd</include>
 							</schemaIncludes>
-							<generateDirectory>src/main/java</generateDirectory>
+							<generateDirectory>src/main/java-generated</generateDirectory>
+							<extension>true</extension>
 						</configuration>
 					</execution>
 				</executions>

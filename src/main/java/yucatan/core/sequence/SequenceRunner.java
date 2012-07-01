@@ -6,7 +6,6 @@ import java.util.List;
 
 import yucatan.core.Command;
 import yucatan.core.sequence.generated.XmlTypeCommand;
-import yucatan.core.sequence.generated.XmlTypeSequence;
 
 /**
  * sequence runner
@@ -58,11 +57,10 @@ public class SequenceRunner extends Command {
 		if (sequenceLocation == null) {
 			return COMMAND_SEQUENCE_NOT_FOUND;
 		}
-		XmlTypeSequence sequenceDeclaration = SequencesManager.getSequence(sequenceLocation);
-		if (sequenceDeclaration == null) {
+		List<XmlTypeCommand> commandsDeclaration = SequencesManager.getSequence(sequenceLocation);
+		if (commandsDeclaration == null) {
 			return Command.COMMAND_SEQUENCE_NOT_FOUND;
 		}
-		List<XmlTypeCommand> commandsDeclaration = sequenceDeclaration.getCommand();
 		for (XmlTypeCommand commandDeclaration : commandsDeclaration) {
 			// fetch declared class
 			Class<?> currentClass;

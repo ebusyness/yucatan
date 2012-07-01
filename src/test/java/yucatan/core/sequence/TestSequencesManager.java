@@ -10,10 +10,9 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import yucatan.core.sequence.generated.XmlTypeCommand;
-import yucatan.core.sequence.generated.XmlTypeSequence;
 
 /**
- * @author Samuel
+ * Test SequencesManager
  * 
  */
 public class TestSequencesManager {
@@ -39,8 +38,7 @@ public class TestSequencesManager {
 		Assert.assertEquals(SequencesManager.SEQUENCE_FOUND, SequencesManager.registerSequenceCollection("ignoredinvalidattribute", "yucatan.core.sequences"));
 
 		// test registered commands
-		XmlTypeSequence sequence = SequencesManager.getSequence("category-show");
-		List<XmlTypeCommand> commandsDeclaration = sequence.getCommand();
+		List<XmlTypeCommand> commandsDeclaration = SequencesManager.getSequence("category-show");
 		assertEquals(2, commandsDeclaration.size());
 	}
 
@@ -58,7 +56,9 @@ public class TestSequencesManager {
 			resultString += sequenceItemName;
 			resultString += "+";
 		}
+		// check position of commands
 		Assert.assertEquals("yucatan.core.category.GetCategoryCommand+yucatan.core.category.ModifyCategoryCommand+", resultString);
+		Assert.assertEquals( null, SequencesManager.inspectSequence("non-existent") );
 	}
 
 }
