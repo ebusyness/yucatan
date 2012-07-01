@@ -51,4 +51,8 @@
 		</plugins>
 	</build>
 
+	<ciManagement>
+		<url>https://buildhive.cloudbees.com/view/My%20Repositories/job/ebusyness/job/yucatan/</url>
+		<system>Jenkins</system>
+	</ciManagement>
 </project>

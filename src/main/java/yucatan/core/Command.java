@@ -6,7 +6,7 @@ package yucatan.core;
 public abstract class Command {
 
 	/**
-	 * Command returned without error.
+	 * Command finished without error.
 	 */
 	public static final String COMMAND_EXECUTION_OK = "COMMAND_EXECUTION_OK";
 
@@ -21,6 +21,8 @@ public abstract class Command {
 	public static final String COMMAND_SEQUENCE_NOT_FOUND = "COMMAND_SEQUENCE_NOT_FOUND";
 
 	/**
+	 * Stub execute function.
+	 * 
 	 * @return return code
 	 */
 	public static String execute() {

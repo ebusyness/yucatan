@@ -8,7 +8,7 @@ import yucatan.core.Command;
 import yucatan.core.sequence.generated.XmlTypeCommand;
 
 /**
- * sequence runner
+ * The sequence runner executes all commands of the specified sequence.
  * 
  */
 public class SequenceRunner extends Command {

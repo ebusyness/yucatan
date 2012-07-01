@@ -6,16 +6,25 @@ package yucatan.core.sequence.util;
  */
 public abstract class ByPositionComparable implements Comparable<ByPositionComparable> {
 
+	/**
+	 * The position property defines the sort order in a sorted list.
+	 */
 	protected Float position;
-	
+
+	/**
+	 * Gets the value of the position property.
+	 * 
+	 * @return the value of the position property or null.
+	 */
     public Float getPosition() {
         return position;
     }
     
-	/*
-	 * (non-Javadoc)
+	/**
+	 * Compares this object with the specified object for order (sort elements by attribute position).
 	 * 
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 * @return a negative integer, zero, or a positive integer as this object is less than, equal to, or greater than the specified object.
 	 */
 	@Override
 	public int compareTo(ByPositionComparable compareItem) {

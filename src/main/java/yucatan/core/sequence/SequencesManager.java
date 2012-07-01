@@ -16,6 +16,10 @@ import yucatan.core.sequence.generated.XmlTypeCommand;
 import yucatan.core.sequence.generated.XmlTypeSequence;
 import yucatan.core.sequence.generated.XmlTypeSequencesList;
 
+/**
+ * The SequencesManager provides methods to register sequence and provide acces to them.
+ * 
+ */
 public class SequencesManager {
 
 	/**
