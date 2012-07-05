@@ -9,7 +9,6 @@ import yucatan.core.sequence.generated.XmlTypeCommand;
 
 /**
  * The sequence runner executes all commands of the specified sequence.
- * 
  */
 public class SequenceRunner extends Command {
 	/**
