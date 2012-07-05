@@ -7,39 +7,39 @@ import java.util.HashMap;
 import org.junit.Test;
 
 /**
- * JUnit tests for {@link yucatan.core.communication.SequenceDataTransportMap}.
+ * JUnit tests for {@link yucatan.core.communication.SequenceDataMap}.
  * 
  */
-public class TestSequenceDataTransportMap {
+public class TestSequenceDataMap {
 
-	private SequenceDataTransportMap transportItem;
+	private SequenceDataMap transportItem;
 
 	/**
-	 * Test method for {@link yucatan.core.communication.SequenceDataTransportMap#SequenceDataTransportMap()}.
+	 * Test method for {@link yucatan.core.communication.SequenceDataMap#SequenceDataTransportMap()}.
 	 */
 	@Test
 	public void testSequenceDataTransportMap() {
 		// create item without param
-		transportItem = new SequenceDataTransportMap();
+		transportItem = new SequenceDataMap();
 	}
 
 	/**
-	 * Test method for {@link yucatan.core.communication.SequenceDataTransportMap#SequenceDataTransportMap(java.util.HashMap)}.
+	 * Test method for {@link yucatan.core.communication.SequenceDataMap#SequenceDataTransportMap(java.util.HashMap)}.
 	 */
 	@Test
 	public void testSequenceDataTransportMapHashMap() {
 		// create new sequence datatransporter by passing a null parameter
-		transportItem = new SequenceDataTransportMap(null);
+		transportItem = new SequenceDataMap(null);
 
 		// pass initial data
 		// prepare inital data with a complex object (HttpParameterMap with HttpParameterValues)
 		HttpParameterMap httpParams = new HttpParameterMap();
 		httpParams.put("objectid", "123456");
 
-		// create a SequenceDataTransportMap with initial data (the HttpParameterMap)
+		// create a SequenceDataMap with initial data (the HttpParameterMap)
 		HashMap<String, Object> initalTransportData = new HashMap<String, Object>();
 		initalTransportData.put("httpParameters", httpParams);
-		transportItem = new SequenceDataTransportMap(initalTransportData);
+		transportItem = new SequenceDataMap(initalTransportData);
 
 		// check values after type cast
 		HttpParameterMap transportedHttpParams = (HttpParameterMap) transportItem.get("httpParameters");
@@ -47,11 +47,11 @@ public class TestSequenceDataTransportMap {
 	}
 
 	/**
-	 * Test method for {@link yucatan.core.communication.SequenceDataTransportMap#put(java.lang.String, Object)}.
+	 * Test method for {@link yucatan.core.communication.SequenceDataMap#put(java.lang.String, Object)}.
 	 */
 	@Test
 	public void testPut() {
-		transportItem = new SequenceDataTransportMap();
+		transportItem = new SequenceDataMap();
 
 		// null parameter check
 		assertEquals(null, transportItem.put(null, null)); // the old value is null too
@@ -67,11 +67,11 @@ public class TestSequenceDataTransportMap {
 	}
 
 	/**
-	 * Test method for {@link yucatan.core.communication.SequenceDataTransportMap#get(java.lang.String)}.
+	 * Test method for {@link yucatan.core.communication.SequenceDataMap#get(java.lang.String)}.
 	 */
 	@Test
 	public void testGet() {
-		transportItem = new SequenceDataTransportMap();
+		transportItem = new SequenceDataMap();
 
 		// null parameter check
 		assertEquals(null, transportItem.get(null));

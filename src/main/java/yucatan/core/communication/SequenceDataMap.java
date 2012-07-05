@@ -5,7 +5,7 @@ import java.util.HashMap;
 /**
  * First draft of a transport item map.
  */
-public class SequenceDataTransportMap {
+public class SequenceDataMap {
 
 	/**
 	 * The {@link HashMap} which contains the key value pairs.
@@ -13,18 +13,18 @@ public class SequenceDataTransportMap {
 	private HashMap<String, Object> dataItems;
 
 	/**
-	 * Create empty SequenceDataTransportMap.
+	 * Create empty SequenceDataMap.
 	 */
-	public SequenceDataTransportMap() {
+	public SequenceDataMap() {
 		dataItems = new HashMap<String, Object>();
 	}
 
 	/**
-	 * Create a SequenceDataTransportMap with initial data.
+	 * Create a SequenceDataMap with initial data.
 	 * 
 	 * @param initalData The initial data {@link HashMap} to register.
 	 */
-	public SequenceDataTransportMap(HashMap<String, Object> initalData) {
+	public SequenceDataMap(HashMap<String, Object> initalData) {
 		// create hash map instance
 		dataItems = new HashMap<String, Object>();
 
