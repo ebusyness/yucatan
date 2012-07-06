@@ -12,6 +12,8 @@ import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 
+import org.apache.log4j.Logger;
+
 import yucatan.core.sequence.generated.XmlTypeCommand;
 import yucatan.core.sequence.generated.XmlTypeSequence;
 import yucatan.core.sequence.generated.XmlTypeSequencesList;
@@ -51,6 +53,11 @@ public class SequencesManager {
 	 * HashMap of registered sequences.
 	 */
 	private static HashMap<String, XmlTypeSequence> sequences = new HashMap<String, XmlTypeSequence>();
+
+	/**
+	 * The log4j logger of this class.
+	 */
+	static Logger log = Logger.getLogger(SequencesManager.class);
 
 	/**
 	 * Gets the sequence from sequences cache.
@@ -105,6 +112,8 @@ public class SequencesManager {
 	 */
 	public static String registerSequenceCollection(String sequenceCollectionName, String sequenceLocation) {
 		if (sequenceCollectionName == null || sequenceLocation == null) {
+			log.error("Failed to register the specified sequence collection due to an null value. passed values: sequenceCollectionName='" + sequenceCollectionName
+					+ "' sequenceLocation='" + sequenceLocation + "'");
 			return SEQUENCE_FILE_NOT_FOUND;
 		}
 
@@ -114,6 +123,8 @@ public class SequencesManager {
 		// load resource
 		InputStream resourceInputStream = ClassLoader.getSystemResourceAsStream(resourceName);
 		if (resourceInputStream == null) {
+			log.error("Failed to register the specified sequence collection. The sequence collection file ('" + resourceName
+					+ "') could not be found. passed values: sequenceCollectionName='" + sequenceCollectionName + "' sequenceLocation='" + sequenceLocation + "'");
 			return SEQUENCE_FILE_NOT_FOUND;
 		}
 
@@ -122,13 +133,13 @@ public class SequencesManager {
 		try {
 			sequencesCollection = unmarshalSequencesInputStream(XmlTypeSequencesList.class, resourceInputStream);
 		} catch (JAXBException e) {
-			e.printStackTrace();
+			log.error("Failed to register the specified sequence collection. The content of the sequence collection file '" + resourceName + "' could not be unmarshalled.", e);
 			return SEQUENCE_FORMAT_ERROR;
 		} finally {
 			try {
 				resourceInputStream.close();
 			} catch (IOException e) {
-				e.printStackTrace();
+				log.error("Failed to register the specified sequence collection. The sequence collection file '" + resourceName + "' could not be closed.", e);
 				return SEQUENCE_STREAMCLOSE_ERROR;
 			}
 		}
@@ -136,8 +147,7 @@ public class SequencesManager {
 		// put sequences to sequences cache and sort
 		List<XmlTypeSequence> sequenesList = sequencesCollection.getSequence();
 		for (XmlTypeSequence sequence : sequenesList) {
-			// TODO logging
-			// System.out.println("sequence registered: " + sequenceCollectionName + "-" + sequence.getId());
+			log.info("registered sequence: " + sequenceCollectionName + "-" + sequence.getId());
 			SequencesManager.sequences.put(sequenceCollectionName + "-" + sequence.getId(), sequence);
 
 			// sort commands
