@@ -33,7 +33,7 @@
 						</goals>
 						<configuration>
 							<!-- Changes the default schema directory -->
-							<schemaDirectory>src/main/resources/yucatan/core/schemas</schemaDirectory>
+							<schemaDirectory>src/main/resources/yucatan/schemas</schemaDirectory>
 							<schemaIncludes>
 								<include>*.xsd</include>
 							</schemaIncludes>

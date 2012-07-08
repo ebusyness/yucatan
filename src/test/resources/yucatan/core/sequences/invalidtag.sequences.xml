@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<invalidtag>
-	<sequences name="category">
-		<sequence target="show">
-			<command name="yucatan.core.category.GetCategoryCommand" position="10.00" />
-		</sequence>
-	</sequences>
-</invalidtag>
