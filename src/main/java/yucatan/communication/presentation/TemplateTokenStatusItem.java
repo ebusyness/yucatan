@@ -26,7 +26,7 @@ public class TemplateTokenStatusItem {
 	 * This indicates which status comes next. -1 means there is no change. The next status will be applied with the next character execept this status defines terminators see
 	 * {@link #terminatedBy}.
 	 */
-	public byte nextStatus = TemplateProcessor.PLACHOLDER_NO_STATUS_CHANGE;
+	public byte[] nextStatus;
 
 	/**
 	 * Current status is regulary terminated by one of these characters.
