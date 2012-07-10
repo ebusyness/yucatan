@@ -81,6 +81,33 @@ public final class TemplateProcessor {
 		if (dataScope == null || template == null) {
 			return null;
 		}
+
+		ArrayList<TemplateToken> templateTokens = getTokens(template);
+		String generatedText = "";
+
+		System.out.println("== tokens ==");
+		for (TemplateToken token : templateTokens) {
+			System.out.println("\ntoken");
+			System.out.println("token.tokenType :" + token.tokenType);
+			System.out.println("token.plainText :" + token.plainText);
+			if (token.tokenType == TemplateToken.TOKENTYPE_TEXT) {
+				generatedText += token.plainText;
+			} else {
+				generatedText += "<PH>";
+			}
+		}
+		System.out.println(generatedText);
+
+		return generatedText;
+	}
+
+	/**
+	 * Forward template String to {@link #tokenizeTemplate} and initializes {@link #statusDescriptors}. The main reason for this method is to inspect the tokens within test cases.
+	 * 
+	 * @param template The template to parse.
+	 * @return A list of tokens.
+	 */
+	public static ArrayList<TemplateToken> getTokens(String template) {
 		if (statusDescriptors == null) {
 			statusDescriptors = new HashMap<Byte, TemplateTokenStatusItem>();
 
@@ -158,34 +185,33 @@ public final class TemplateProcessor {
 			// == PLACHOLDER_STATUS_TERMINATED ==
 			// the placeholder terminator was found '}'
 			TemplateTokenStatusItem placholderTerminator = new TemplateTokenStatusItem();
-			placholderTerminator.nextStatus = new byte[1];
-			placholderTerminator.nextStatus[0] = PLACHOLDER_STATUS_STOPPED;
+			placholderTerminator.nextExpectedChar = '$';
+			placholderTerminator.nextExpectsExplicitChar = true;
+			placholderTerminator.successStatus = PLACHOLDER_STATUS_OPENINGCHAR1;
+			placholderTerminator.failStatus = PLACHOLDER_STATUS_STOPPED;
+			// placholderTerminator.nextStatus = new byte[1];
+			// placholderTerminator.nextStatus[0] = PLACHOLDER_STATUS_STOPPED;
 			placholderTerminator.stopAndDropToken = true; // drop/skip the '}' token
+			// placholderTerminator.stopAndCreateToken = true;
+			// placholderTerminator.createTokenType = TemplateToken.TOKENTYPE_TEXT;
 			statusDescriptors.put(PLACHOLDER_STATUS_TERMINATED, placholderTerminator);
 
 			// == PLACHOLDER_STATUS_TERMINATED_AFTER_ACTIONNAME ==
 			// the placeholder terminator was found '}' after the action name
 			// * creates an action name token
 			TemplateTokenStatusItem placholderTerminatorAfterAction = new TemplateTokenStatusItem();
-			placholderTerminatorAfterAction.nextStatus = new byte[1];
-			placholderTerminatorAfterAction.nextStatus[0] = PLACHOLDER_STATUS_STOPPED;
+			placholderTerminatorAfterAction.nextExpectedChar = '$';
+			placholderTerminatorAfterAction.nextExpectsExplicitChar = true;
+			placholderTerminatorAfterAction.successStatus = PLACHOLDER_STATUS_OPENINGCHAR1;
+			placholderTerminatorAfterAction.failStatus = PLACHOLDER_STATUS_STOPPED;
+			// placholderTerminatorAfterAction.nextStatus = new byte[1];
+			// placholderTerminatorAfterAction.nextStatus[0] = PLACHOLDER_STATUS_STOPPED;
 			placholderTerminatorAfterAction.stopAndCreateToken = true;
 			placholderTerminatorAfterAction.createTokenType = TemplateToken.TOKENTYPE_ACTIONNAME;
 			statusDescriptors.put(PLACHOLDER_STATUS_TERMINATED_AFTER_ACTIONNAME, placholderTerminatorAfterAction);
 
-
-
 		}
-
-		ArrayList<TemplateToken> templateTokens = tokenizeTemplate(template);
-		System.out.println("== tokens ==");
-		for (TemplateToken token : templateTokens) {
-			System.out.println("\ntoken");
-			System.out.println("token.tokenType :" + token.tokenType);
-			System.out.println("token.plainText :" + token.plainText);
-		}
-
-		return "";
+		return tokenizeTemplate(template);
 	}
 
 	/**
@@ -214,10 +240,12 @@ public final class TemplateProcessor {
 
 			// stop here and create the current token
 			if (currentStatus.stopAndCreateToken) {
-				TemplateToken templateToken = new TemplateToken();
-				templateToken.plainText = template.substring(startPositionNewToken, i - 1); // TODO recheck i-1 - add special testcase
-				templateToken.tokenType = currentStatus.createTokenType;
-				templateTokens.add(templateToken);
+				if (startPositionNewToken < i - 1) { // skip emtpy tokens
+					TemplateToken templateToken = new TemplateToken();
+					templateToken.plainText = template.substring(startPositionNewToken, i - 1);
+					templateToken.tokenType = currentStatus.createTokenType;
+					templateTokens.add(templateToken);
+				}
 				startPositionCurrentToken = i;
 				startPositionNewToken = i;
 			}
@@ -264,22 +292,30 @@ public final class TemplateProcessor {
 					}
 				}
 				if (terminatorFound && currentStatus.nextStatus != null) {
-					if( currentStatus.nextStatus.length >= terminatorPosition) {
+					if (currentStatus.nextStatus.length >= terminatorPosition) {
 						currentStatus = statusDescriptors.get(currentStatus.nextStatus[terminatorPosition]);
-					} else if (currentStatus.nextStatus.length > 0 ) {
+					} else if (currentStatus.nextStatus.length > 0) {
 						currentStatus = statusDescriptors.get(currentStatus.nextStatus[0]);
 					}
 				}
-			} else if (currentStatus.nextStatus != null && currentStatus.nextStatus.length > 0){
+			} else if (currentStatus.nextStatus != null && currentStatus.nextStatus.length > 0) {
 				currentStatus = statusDescriptors.get(currentStatus.nextStatus[0]);
 			}
 		}
-		// append everything thats left
-		TemplateToken templateToken = new TemplateToken();
-		templateToken.plainText = template.substring(startPositionNewToken, template.length());
-		templateToken.tokenType = TemplateToken.TOKENTYPE_TEXT;
-		templateTokens.add(templateToken);
+		// create the current token
+		if (currentStatus.stopAndCreateToken) {
+			TemplateToken templateToken = new TemplateToken();
+			templateToken.plainText = template.substring(startPositionNewToken, template.length() - 1); // TODO recheck i-1 - add special testcase
+			templateToken.tokenType = currentStatus.createTokenType;
+			templateTokens.add(templateToken);
 
+		} else {
+			// append everything thats left
+			TemplateToken templateToken = new TemplateToken();
+			templateToken.plainText = template.substring(startPositionNewToken, template.length());
+			templateToken.tokenType = TemplateToken.TOKENTYPE_TEXT;
+			templateTokens.add(templateToken);
+		}
 		return templateTokens;
 	}
 
