@@ -20,23 +20,25 @@ public class TestTemplateProcessor {
 	 * Test method for {@link yucatan.communication.presentation.TemplateProcessor#doRender(java.lang.Object, java.lang.String)}.
 	 */
 	@Test
-	public void testDoRenderSimplePlaceholders() {
+	public void testDoRenderSimplePlaceholders1() {
 
 		// test simple placholders
-		// * doRender -> general expected result
+		// - one placeholder at the end of string
+		// - another inbetween
+		// * call doRender() -> general expected result
 		String template = "<html><body><h1>${@odd}</h1><ul>${@count}";
 		assertEquals("<html><body><h1><PH></h1><ul><PH>", TemplateProcessor.doRender(new Object(), template));
 
-		// * getTokens -> analyze tokens
+		// same test string but this time have a look at the tokens
+		// * call getTokens() -> analyze tokens
 		ArrayList<TemplateToken> tokens = TemplateProcessor.getTokens(template);
 		TemplateToken token0 = tokens.get(0);
 		TemplateToken token1 = tokens.get(1);
 		TemplateToken token2 = tokens.get(2);
 		TemplateToken token3 = tokens.get(3);
-		// TemplateToken token4 = tokens.get(4);
 
 		assertEquals(0, token0.tokenType.byteValue());
-		assertEquals("<html><body><h1>", token0.plainText );
+		assertEquals("<html><body><h1>", token0.plainText);
 
 		assertEquals(1, token1.tokenType.byteValue());
 		assertEquals("odd", token1.plainText);
@@ -47,17 +49,27 @@ public class TestTemplateProcessor {
 		assertEquals(1, token3.tokenType.byteValue());
 		assertEquals("count", token3.plainText);
 
+		assertEquals(4, tokens.size());
+	}
+
+	/**
+	 * Test method for {@link yucatan.communication.presentation.TemplateProcessor#doRender(java.lang.Object, java.lang.String)}.
+	 */
+	@Test
+	public void testDoRenderSimplePlaceholders2() {
 		// simple placeholders at start position
+		// - one placeholder at the beginning of string
+		// - one placeholder at the end of string
 		// * doRender -> general expected result
-		template = "${@odd}<html><ul>${@data}";
+		String template = "${@odd}<html><ul>${@data}";
 		assertEquals("<PH><html><ul><PH>", TemplateProcessor.doRender(new Object(), template));
 
+		// same test string but this time have a look at the tokens
 		// * getTokens -> analyze tokens
-		tokens = TemplateProcessor.getTokens(template);
-		token0 = tokens.get(0);
-		token1 = tokens.get(1);
-		token2 = tokens.get(2);
-
+		ArrayList<TemplateToken> tokens = TemplateProcessor.getTokens(template);
+		TemplateToken token0 = tokens.get(0);
+		TemplateToken token1 = tokens.get(1);
+		TemplateToken token2 = tokens.get(2);
 
 		assertEquals(1, token0.tokenType.byteValue());
 		assertEquals("odd", token0.plainText);
@@ -68,13 +80,100 @@ public class TestTemplateProcessor {
 		assertEquals(1, token2.tokenType.byteValue());
 		assertEquals("data", token2.plainText);
 
+		assertEquals(3, tokens.size());
+	}
 
-		// simple placeholder after simple placeholder
-		template = "<html><body><h1>${@odd}${@count}</h1><ul>";
+	/**
+	 * Test method for {@link yucatan.communication.presentation.TemplateProcessor#doRender(java.lang.Object, java.lang.String)}.
+	 */
+	@Test
+	public void testDoRenderSimplePlaceholders3() {
+
+		// simple placeholder after an simple placeholder
+		// - two directly following simple placeholders -
+		String template = "<html><body><h1>${@odd}${@count}</h1><ul>";
 		assertEquals("<html><body><h1><PH><PH></h1><ul>", TemplateProcessor.doRender(new Object(), template));
 
+		// same test string but this time have a look at the tokens
+		// * getTokens -> analyze tokens
+		ArrayList<TemplateToken> tokens = TemplateProcessor.getTokens(template);
+		TemplateToken token0 = tokens.get(0);
+		TemplateToken token1 = tokens.get(1);
+		TemplateToken token2 = tokens.get(2);
+		TemplateToken token3 = tokens.get(3);
+
+		assertEquals(0, token0.tokenType.byteValue());
+		assertEquals("<html><body><h1>", token0.plainText);
+
+		assertEquals(1, token1.tokenType.byteValue());
+		assertEquals("odd", token1.plainText);
+
+		assertEquals(1, token2.tokenType.byteValue());
+		assertEquals("count", token2.plainText);
+
+		assertEquals(0, token3.tokenType.byteValue());
+		assertEquals("</h1><ul>", token3.plainText);
+
+		assertEquals(4, tokens.size());
+	}
+
+	/**
+	 * Test method for {@link yucatan.communication.presentation.TemplateProcessor#doRender(java.lang.Object, java.lang.String)}.
+	 */
+	@Test
+	public void testDoRenderSimplePlaceholders4() {
+		// simple placeholder after an simple placeholder
+		// - seperated by one character
+		String template = "<h1>${@odd}-${@count}</h1>";
+		TemplateProcessor.doRender(new Object(), template);
+		assertEquals("<h1><PH>-<PH></h1>", TemplateProcessor.doRender(new Object(), template));
+
+		// same test string but this time have a look at the tokens
+		// * getTokens -> analyze tokens
+		ArrayList<TemplateToken> tokens = TemplateProcessor.getTokens(template);
+		TemplateToken token0 = tokens.get(0);
+		TemplateToken token1 = tokens.get(1);
+		TemplateToken token2 = tokens.get(2);
+		TemplateToken token3 = tokens.get(3);
+		TemplateToken token4 = tokens.get(4);
+
+		assertEquals(0, token0.tokenType.byteValue());
+		assertEquals("<h1>", token0.plainText);
+
+		assertEquals(1, token1.tokenType.byteValue());
+		assertEquals("odd", token1.plainText);
+
+		assertEquals(0, token2.tokenType.byteValue());
+		assertEquals("-", token2.plainText);
+
+		assertEquals(1, token3.tokenType.byteValue());
+		assertEquals("count", token3.plainText);
+
+		assertEquals(0, token4.tokenType.byteValue());
+		assertEquals("</h1>", token4.plainText);
+
+		assertEquals(5, tokens.size());
+	}
+
+	/**
+	 * Test method for {@link yucatan.communication.presentation.TemplateProcessor#doRender(java.lang.Object, java.lang.String)}.
+	 */
+	@Test
+	public void testDoRenderSimplePlaceholders5() {
+		// invalid placeholder format
+		String template = "<h1>${other-placeholder}</h1>";
+		assertEquals("<h1>${other-placeholder}</h1>", TemplateProcessor.doRender(new Object(), template));
+
+		// same test string but this time have a look at the tokens
+		// * getTokens -> analyze tokens
+		ArrayList<TemplateToken> tokens = TemplateProcessor.getTokens(template);
+		TemplateToken token0 = tokens.get(0);
+
+		assertEquals(0, token0.tokenType.byteValue());
+		assertEquals("<h1>${other-placeholder}</h1>", token0.plainText);
 
 
+		assertEquals(5, tokens.size());
 	}
 
 	/**
@@ -100,4 +199,3 @@ public class TestTemplateProcessor {
 
 	}
 }
-

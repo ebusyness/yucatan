@@ -118,6 +118,7 @@ public final class TemplateProcessor {
 			placeholderStopped.nextExpectsExplicitChar = true;
 			placeholderStopped.successStatus = PLACHOLDER_STATUS_OPENINGCHAR1;
 			placeholderStopped.startNewToken = true;
+			placeholderStopped.nextStartNewTokenBlocked = true;
 			statusDescriptors.put(PLACHOLDER_STATUS_STOPPED, placeholderStopped);
 
 			// == PLACHOLDER_STATUS_OPENINGCHAR1 ==
@@ -152,6 +153,7 @@ public final class TemplateProcessor {
 			actionStarted.terminatedBy[0] = '(';
 			actionStarted.terminatedBy[1] = '}';
 			actionStarted.startNewToken = true;
+			actionStarted.nextStartNewTokenBlocked = true;
 			statusDescriptors.put(PLACHOLDER_STATUS_ACTION_STARTED, actionStarted);
 
 			// == PLACHOLDER_STATUS_ACTION_STOPPED ==
@@ -189,11 +191,8 @@ public final class TemplateProcessor {
 			placholderTerminator.nextExpectsExplicitChar = true;
 			placholderTerminator.successStatus = PLACHOLDER_STATUS_OPENINGCHAR1;
 			placholderTerminator.failStatus = PLACHOLDER_STATUS_STOPPED;
-			// placholderTerminator.nextStatus = new byte[1];
-			// placholderTerminator.nextStatus[0] = PLACHOLDER_STATUS_STOPPED;
 			placholderTerminator.stopAndDropToken = true; // drop/skip the '}' token
-			// placholderTerminator.stopAndCreateToken = true;
-			// placholderTerminator.createTokenType = TemplateToken.TOKENTYPE_TEXT;
+			placholderTerminator.nextStartNewTokenBlocked = true;
 			statusDescriptors.put(PLACHOLDER_STATUS_TERMINATED, placholderTerminator);
 
 			// == PLACHOLDER_STATUS_TERMINATED_AFTER_ACTIONNAME ==
@@ -204,10 +203,9 @@ public final class TemplateProcessor {
 			placholderTerminatorAfterAction.nextExpectsExplicitChar = true;
 			placholderTerminatorAfterAction.successStatus = PLACHOLDER_STATUS_OPENINGCHAR1;
 			placholderTerminatorAfterAction.failStatus = PLACHOLDER_STATUS_STOPPED;
-			// placholderTerminatorAfterAction.nextStatus = new byte[1];
-			// placholderTerminatorAfterAction.nextStatus[0] = PLACHOLDER_STATUS_STOPPED;
 			placholderTerminatorAfterAction.stopAndCreateToken = true;
 			placholderTerminatorAfterAction.createTokenType = TemplateToken.TOKENTYPE_ACTIONNAME;
+			placholderTerminatorAfterAction.nextStartNewTokenBlocked = true;
 			statusDescriptors.put(PLACHOLDER_STATUS_TERMINATED_AFTER_ACTIONNAME, placholderTerminatorAfterAction);
 
 		}
@@ -233,16 +231,14 @@ public final class TemplateProcessor {
 		for (int i = 0, n = template.length(); i < n; i++) {
 			char c = template.charAt(i);
 
-			// set a new start position for the next token (only after status change "event")
-			if (lastStatus != currentStatus && currentStatus.startNewToken) {
-				startPositionNewToken = i;
-			}
-
 			// stop here and create the current token
 			if (currentStatus.stopAndCreateToken) {
+				// if (startPositionCurrentToken < startPositionNewToken) {
+				// System.out.println("skipped:" + template.substring(startPositionCurrentToken, startPositionNewToken));
+				// }
 				if (startPositionNewToken < i - 1) { // skip emtpy tokens
 					TemplateToken templateToken = new TemplateToken();
-					templateToken.plainText = template.substring(startPositionNewToken, i - 1);
+					templateToken.plainText = template.substring(startPositionNewToken, i - 1); // do not add the current char since it is the identifier for the next sequence
 					templateToken.tokenType = currentStatus.createTokenType;
 					templateTokens.add(templateToken);
 				}
@@ -256,8 +252,15 @@ public final class TemplateProcessor {
 				startPositionNewToken = i;
 			}
 
+			// set a new start position for the next token (only if allowed in previous status)
+			if (currentStatus.startNewToken && !lastStatus.nextStartNewTokenBlocked) {
+				startPositionNewToken = i;
+			}
+
 			// store last status
 			lastStatus = currentStatus;
+			// System.out.println(c + " " + TemplateTokenStatusItem.inspectProperties(currentStatus) + "  i=" + i + "  cs=" + startPositionCurrentToken + "  ens="
+			// + startPositionNewToken);
 
 			// check next expected char
 			if (currentStatus.nextExpectsExplicitChar && currentStatus.nextExpectedChar == c) {

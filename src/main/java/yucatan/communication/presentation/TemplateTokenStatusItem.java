@@ -34,9 +34,14 @@ public class TemplateTokenStatusItem {
 	public char[] terminatedBy;
 
 	/**
-	 * Set a new start position at the current position. (Only the first time when the status switched to the current status.)
+	 * Set a new start position at the current position.
 	 */
 	public boolean startNewToken = false;
+
+	/**
+	 * Block {@link #startNewToken} for the next status.
+	 */
+	public boolean nextStartNewTokenBlocked = false;
 
 	/**
 	 * Inidcates that a token ends here. A token of type {@link #createTokenType} will be created.
@@ -53,7 +58,56 @@ public class TemplateTokenStatusItem {
 	 */
 	public Byte createTokenType = TemplateToken.TOKENTYPE_TEXT;
 
+	/**
+	 * (empty) constructor method
+	 */
 	public TemplateTokenStatusItem() {
+	}
 
+	/**
+	 * A simple inspector method for debugging purposes.
+	 * 
+	 * @param instance The instance to inspect.
+	 * @return a JSON-like String with all properies of the instance.
+	 */
+	public static String inspectProperties(TemplateTokenStatusItem instance) {
+		String output = "{";
+		String expectedC = instance.nextExpectsExplicitChar == true ? "'" + instance.nextExpectedChar + "'" : "<undefined>";
+		output += "nextExpectedChar:" + expectedC + ",";
+		output += "nextExpectsExplicitChar:" + instance.nextExpectsExplicitChar + ",";
+		output += "successStatus:" + instance.successStatus + ",";
+		output += "failStatus:" + instance.failStatus + ",";
+		output += "nextStatus:";
+		if (instance.nextStatus != null) {
+			output += "[";
+			for (int i = 0; i < instance.nextStatus.length; i++) {
+				if (i != 0) {
+					output += ",";
+				}
+				output += instance.nextStatus[i];
+			}
+			output += "],";
+			;
+		} else {
+			output += "null,";
+		}
+		output += "terminatedBy:";
+		if (instance.terminatedBy != null) {
+			output += "[";
+			for (int i = 0; i < instance.terminatedBy.length; i++) {
+				if (i != 0) {
+					output += ",";
+				}
+				output += "'" + instance.terminatedBy[i] + "'";
+			}
+			output += "],";
+		} else {
+			output += "null,";
+		}
+		output += "startNewToken:" + instance.startNewToken + ",";
+		output += "stopAndCreateToken:" + instance.stopAndCreateToken + ",";
+		output += "stopAndDropToken:" + instance.stopAndDropToken;
+		output += "}";
+		return output;
 	}
 }
