@@ -61,10 +61,17 @@ public final class TemplateProcessor {
 	 * This status indicates that we are at the terminator of placeholder sequence after an action name eg. ${@count}
 	 */
 	private static final Byte PLACHOLDER_STATUS_TERMINATED_AFTER_ACTIONNAME = 51;
+
 	/**
-	 * This status indicates that we are at the terminator of placeholder sequence after an action name eg. ${@count}
+	 * This status indicates that we are at the terminator of placeholder sequence after the memeberquery eg. ${@data(memberquery)}
 	 */
 	private static final Byte PLACHOLDER_STATUS_MEMBERQUERY_STOPPED = 52;
+
+	/**
+	 * This status indicates that we are again in status placeholder stopped. In this special case a new token will be created.
+	 */
+	private static final Byte PLACHOLDER_STATUS_STOPPED_CREATENEW = 53;
+
 	/**
 	 * This hashmap contains the different status items
 	 */
@@ -85,18 +92,18 @@ public final class TemplateProcessor {
 		ArrayList<TemplateToken> templateTokens = getTokens(template);
 		String generatedText = "";
 
-		System.out.println("== tokens ==");
+//		System.out.println("== tokens ==");
 		for (TemplateToken token : templateTokens) {
-			System.out.println("\ntoken");
-			System.out.println("token.tokenType :" + token.tokenType);
-			System.out.println("token.plainText :" + token.plainText);
+//			System.out.println("\ntoken");
+//			System.out.println("token.tokenType :" + token.tokenType);
+//			System.out.println("token.plainText :" + token.plainText);
 			if (token.tokenType == TemplateToken.TOKENTYPE_TEXT) {
 				generatedText += token.plainText;
 			} else {
 				generatedText += "<PH>";
 			}
 		}
-		System.out.println("generated:" + generatedText);
+// System.out.println("generated:" + generatedText);
 
 		return generatedText;
 	}
@@ -117,9 +124,19 @@ public final class TemplateProcessor {
 			placeholderStopped.nextExpectedChar = '$';
 			placeholderStopped.nextExpectsExplicitChar = true;
 			placeholderStopped.successStatus = PLACHOLDER_STATUS_OPENINGCHAR1;
-			placeholderStopped.startNewToken = true;
-			placeholderStopped.nextStartNewTokenBlocked = true;
 			statusDescriptors.put(PLACHOLDER_STATUS_STOPPED, placeholderStopped);
+
+			// == PLACHOLDER_STATUS_STOPPED_CREATENEW ==
+			// stopped configuration
+			TemplateTokenStatusItem placeholderStoppedCreateNew = new TemplateTokenStatusItem();
+			placeholderStoppedCreateNew.nextExpectedChar = '$';
+			placeholderStoppedCreateNew.nextExpectsExplicitChar = true;
+			placeholderStoppedCreateNew.successStatus = PLACHOLDER_STATUS_OPENINGCHAR1;
+			placeholderStoppedCreateNew.failStatus = PLACHOLDER_STATUS_STOPPED;
+			placeholderStoppedCreateNew.createToken = true;
+			placeholderStoppedCreateNew.createTokenType = TemplateToken.TOKENTYPE_TEXT;
+			placeholderStoppedCreateNew.startNewFromPrevious = true;
+			statusDescriptors.put(PLACHOLDER_STATUS_STOPPED_CREATENEW, placeholderStoppedCreateNew);
 
 			// == PLACHOLDER_STATUS_OPENINGCHAR1 ==
 			// started / first opening char $
@@ -139,7 +156,8 @@ public final class TemplateProcessor {
 			placeholderChar2.nextExpectedChar = '@';
 			placeholderChar2.nextExpectsExplicitChar = true;
 			placeholderChar2.successStatus = PLACHOLDER_STATUS_ACTION_STARTED;
-			placeholderChar2.failStatus = PLACHOLDER_STATUS_STOPPED;
+			placeholderChar2.failStatus = PLACHOLDER_STATUS_STOPPED_CREATENEW;
+			placeholderChar2.revaluateOnfail = true;
 			statusDescriptors.put(PLACHOLDER_STATUS_OPENINGCHAR2, placeholderChar2);
 
 			// == PLACHOLDER_STATUS_ACTION_STARTED ==
@@ -226,10 +244,22 @@ public final class TemplateProcessor {
 		ArrayList<TemplateToken> templateTokens = new ArrayList<TemplateToken>();
 		TemplateTokenStatusItem lastStatus = statusDescriptors.get(PLACHOLDER_STATUS_STOPPED);
 		TemplateTokenStatusItem currentStatus = statusDescriptors.get(PLACHOLDER_STATUS_STOPPED);
+		boolean hasFailed = false;
 		int startPositionCurrentToken = 0; // start position of the current token (used as fall back to text type)
 		int startPositionNewToken = 0; // start position of new intended token (used for intended specialized types)
 
 		for (int i = 0, n = template.length(); i < n; i++) {
+
+			// if the lastStatus signaled an revaluateOnfail we have to go back to the last character
+			// but this time with an other status item (so we can detect other expected characters)
+			if (lastStatus.revaluateOnfail && hasFailed) {
+				i--;
+			}
+
+			// reset hasFaild flag
+			hasFailed = false;
+
+			// get current character
 			char c = template.charAt(i);
 
 			// stop here and create the current token
@@ -286,6 +316,7 @@ public final class TemplateProcessor {
 			if (currentStatus.nextExpectsExplicitChar && currentStatus.nextExpectedChar != c) {
 				if (currentStatus.failStatus != PLACHOLDER_NO_STATUS_CHANGE) {
 					currentStatus = statusDescriptors.get(currentStatus.failStatus);
+					hasFailed = true;
 				}
 				// Patterns didn't match so we have to switch to the old (fall back) position
 				// so that the complete text remains in the next token.
