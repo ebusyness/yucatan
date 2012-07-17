@@ -39,19 +39,24 @@ public class TemplateTokenStatusItem {
 	public boolean startNewToken = false;
 
 	/**
+	 * Set the new start position to the position of the previous character. Is stronger than the new position of {@link #startNewToken}, {@link #createToken}, {@link #dropToken}
+	 */
+	public boolean startNewFromPrevious = false;
+
+	/**
 	 * Block {@link #startNewToken} for the next status.
 	 */
 	public boolean nextStartNewTokenBlocked = false;
 
 	/**
-	 * Inidcates that a token ends here. A token of type {@link #createTokenType} will be created.
+	 * Inidcates that a token ends here. A token of type {@link #createTokenType} will be created. It also sets a new start position at the current position for the next position.
 	 */
-	public boolean stopAndCreateToken = false;
+	public boolean createToken = false;
 
 	/**
 	 * Inidcates that a token ends here. The token will be ignored.
 	 */
-	public boolean stopAndDropToken = false;
+	public boolean dropToken = false;
 
 	/**
 	 * The type of token to be created see static memebers of {@link TemplateToken}. default = TemplateToken.TOKENTYPE_TEXT
@@ -105,8 +110,10 @@ public class TemplateTokenStatusItem {
 			output += "null,";
 		}
 		output += "startNewToken:" + instance.startNewToken + ",";
-		output += "stopAndCreateToken:" + instance.stopAndCreateToken + ",";
-		output += "stopAndDropToken:" + instance.stopAndDropToken;
+		output += "startNewFromPrevious:" + instance.startNewFromPrevious + ",";
+		output += "nextStartNewTokenBlocked:" + instance.nextStartNewTokenBlocked + ",";
+		output += "createToken:" + instance.createToken + ",";
+		output += "dropToken:" + instance.dropToken;
 		output += "}";
 		return output;
 	}
