@@ -38,17 +38,17 @@ public final class TemplateProcessor {
 	private static final Byte PLACHOLDER_STATUS_OPENINGCHAR2 = 2;
 
 	/**
-	 * This status indicates that the action declaration was started. Folowing sequence found ${:
+	 * This status indicates that the action declaration was started. Folowing sequence found '$','{':
 	 */
 	private static final Byte PLACHOLDER_STATUS_ACTION_STARTED = 3;
 
 	/**
-	 * This status indicates that the action declaration was stopped. Folowing sequence found "${:" + some chars + terminator ":"
+	 * This status indicates that the action declaration was stopped. Folowing sequence found '$','{',':' + some chars + terminator '(' or '}'
 	 */
 	private static final Byte PLACHOLDER_STATUS_ACTION_STOPPED = 4;
 
 	/**
-	 * This status indicates that the action declaration was started. Folowing sequence found ${:
+	 * This status indicates that the action declaration was started. Folowing sequence found '$','{',':'
 	 */
 	private static final Byte PLACHOLDER_STATUS_MEMBERQUERY_STARTED = 5;
 
@@ -58,12 +58,12 @@ public final class TemplateProcessor {
 	private static final Byte PLACHOLDER_STATUS_TERMINATED = 50;
 
 	/**
-	 * This status indicates that we are at the terminator of placeholder sequence after an action name eg. ${@count}
+	 * This status indicates that we are at the terminator of placeholder sequence after an action name eg. '$','{', '@', "count", '}'
 	 */
 	private static final Byte PLACHOLDER_STATUS_TERMINATED_AFTER_ACTIONNAME = 51;
 
 	/**
-	 * This status indicates that we are at the terminator of placeholder sequence after the memeberquery eg. ${@data(memberquery)}
+	 * This status indicates that we are at the terminator of placeholder sequence after the memeberquery eg. '$','{','@',"data",'(', <memberquery> ')','}'
 	 */
 	private static final Byte PLACHOLDER_STATUS_MEMBERQUERY_STOPPED = 52;
 
@@ -92,19 +92,19 @@ public final class TemplateProcessor {
 		ArrayList<TemplateToken> templateTokens = getTokens(template);
 		String generatedText = "";
 
-//		System.out.println("== tokens ==");
 		for (TemplateToken token : templateTokens) {
-//			System.out.println("\ntoken");
-//			System.out.println("token.tokenType :" + token.tokenType);
-//			System.out.println("token.plainText :" + token.plainText);
 			if (token.tokenType == TemplateToken.TOKENTYPE_TEXT) {
 				generatedText += token.plainText;
-			} else {
-				generatedText += "<PH>";
+				continue;
 			}
+			// TODO
+			// Methods to call
+			// query( String )
+			// get( )
+			// dataScope
+			
+			generatedText += "<PH>";
 		}
-// System.out.println("generated:" + generatedText);
-
 		return generatedText;
 	}
 
@@ -114,7 +114,7 @@ public final class TemplateProcessor {
 	 * @param template The template to parse.
 	 * @return A list of tokens.
 	 */
-	public static ArrayList<TemplateToken> getTokens(String template) {
+	protected static ArrayList<TemplateToken> getTokens(String template) {
 		if (statusDescriptors == null) {
 			statusDescriptors = new HashMap<Byte, TemplateTokenStatusItem>();
 
@@ -139,7 +139,7 @@ public final class TemplateProcessor {
 			statusDescriptors.put(PLACHOLDER_STATUS_STOPPED_CREATENEW, placeholderStoppedCreateNew);
 
 			// == PLACHOLDER_STATUS_OPENINGCHAR1 ==
-			// started / first opening char $
+			// started / first opening char '$'
 			TemplateTokenStatusItem placeholderChar1 = new TemplateTokenStatusItem();
 			placeholderChar1.nextExpectedChar = '{';
 			placeholderChar1.nextExpectsExplicitChar = true;
@@ -151,7 +151,7 @@ public final class TemplateProcessor {
 			statusDescriptors.put(PLACHOLDER_STATUS_OPENINGCHAR1, placeholderChar1);
 
 			// == PLACHOLDER_STATUS_OPENINGCHAR2 ==
-			// started / first + second opening char ${
+			// started / first + second opening char '$', '{'
 			TemplateTokenStatusItem placeholderChar2 = new TemplateTokenStatusItem();
 			placeholderChar2.nextExpectedChar = '@';
 			placeholderChar2.nextExpectsExplicitChar = true;
@@ -161,7 +161,7 @@ public final class TemplateProcessor {
 			statusDescriptors.put(PLACHOLDER_STATUS_OPENINGCHAR2, placeholderChar2);
 
 			// == PLACHOLDER_STATUS_ACTION_STARTED ==
-			// started action sequence chars ${@
+			// started action sequence chars '$','{','@'
 			// * wait for '(' or '}'
 			// * start new token
 			TemplateTokenStatusItem actionStarted = new TemplateTokenStatusItem();
@@ -176,7 +176,7 @@ public final class TemplateProcessor {
 			statusDescriptors.put(PLACHOLDER_STATUS_ACTION_STARTED, actionStarted);
 
 			// == PLACHOLDER_STATUS_ACTION_STOPPED ==
-			// stopped action sequence chars "${@" + any chars + terminator "("
+			// stopped action sequence chars '$','{','@' + any chars + terminator '('
 			TemplateTokenStatusItem actionStopped = new TemplateTokenStatusItem();
 			actionStopped.nextStatus = new byte[1];
 			actionStopped.nextStatus[0] = PLACHOLDER_STATUS_MEMBERQUERY_STARTED;
@@ -350,7 +350,8 @@ public final class TemplateProcessor {
 		// create the current token
 		if (currentStatus.createToken) {
 			TemplateToken templateToken = new TemplateToken();
-			templateToken.plainText = template.substring(startPositionNewToken, template.length() - 1); // TODO recheck i-1 - add special testcase
+			// when creating a token explictly we cut off the last character (same behavior as above)
+			templateToken.plainText = template.substring(startPositionNewToken, template.length() - 1);
 			templateToken.tokenType = currentStatus.createTokenType;
 			templateTokens.add(templateToken);
 
