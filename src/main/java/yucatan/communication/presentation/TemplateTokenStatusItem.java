@@ -1,5 +1,11 @@
 package yucatan.communication.presentation;
 
+/**
+ * Object of this class describe the current status of the yucatan template parser.
+ * <p>
+ * currently implemented format of template placeholders: ${@<action-name>(<member-query>)}
+ * </p>
+ */
 public class TemplateTokenStatusItem {
 
 	/**
