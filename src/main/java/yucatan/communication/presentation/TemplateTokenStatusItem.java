@@ -21,12 +21,12 @@ public class TemplateTokenStatusItem {
 	/**
 	 * This indicates which status comes next if the pattern match. -1 means there is no change.
 	 */
-	public byte successStatus = TemplateProcessor.PLACHOLDER_NO_STATUS_CHANGE;
+	public byte successStatus = TemplateTokenizer.PLACHOLDER_NO_STATUS_CHANGE;
 
 	/**
 	 * This indicates which status comes next if the pattern fail. -1 means there is no change.
 	 */
-	public byte failStatus = TemplateProcessor.PLACHOLDER_NO_STATUS_CHANGE;
+	public byte failStatus = TemplateTokenizer.PLACHOLDER_NO_STATUS_CHANGE;
 
 	/**
 	 * This indicates which status comes next. -1 means there is no change. The next status will be applied with the next character execept this status defines terminators see
