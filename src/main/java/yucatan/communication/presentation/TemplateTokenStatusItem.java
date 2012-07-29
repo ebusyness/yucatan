@@ -71,9 +71,9 @@ public class TemplateTokenStatusItem {
 	public boolean dropToken = false;
 
 	/**
-	 * The type of token to be created see static memebers of {@link TemplateToken}. default = TemplateToken.TOKENTYPE_TEXT
+	 * The type of token to be created see static memebers of {@link TemplateToken}.
 	 */
-	public Byte createTokenType = TemplateToken.TOKENTYPE_TEXT;
+	public byte[] createTokenType;
 
 	/**
 	 * (empty) constructor method

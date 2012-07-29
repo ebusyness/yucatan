@@ -65,6 +65,9 @@ public class TemplateTokenizer {
 	 */
 	private static HashMap<Byte, TemplateTokenStatusItem> statusDescriptors;
 
+	/**
+	 * Does the initialization of status decriptors.
+	 */
 	private static void initStatusDescriptors() {
 		statusDescriptors = new HashMap<Byte, TemplateTokenStatusItem>();
 
@@ -84,7 +87,8 @@ public class TemplateTokenizer {
 		placeholderStoppedCreateNew.successStatus = PLACHOLDER_STATUS_OPENINGCHAR1;
 		placeholderStoppedCreateNew.failStatus = PLACHOLDER_STATUS_STOPPED;
 		placeholderStoppedCreateNew.createToken = true;
-		placeholderStoppedCreateNew.createTokenType = TemplateToken.TOKENTYPE_TEXT;
+		placeholderStoppedCreateNew.createTokenType = new byte[1];
+		placeholderStoppedCreateNew.createTokenType[0] = TemplateToken.TOKENTYPE_TEXT;
 		placeholderStoppedCreateNew.startNewFromPrevious = true;
 		statusDescriptors.put(PLACHOLDER_STATUS_STOPPED_CREATENEW, placeholderStoppedCreateNew);
 
@@ -96,7 +100,8 @@ public class TemplateTokenizer {
 		placeholderChar1.successStatus = PLACHOLDER_STATUS_OPENINGCHAR2;
 		placeholderChar1.failStatus = PLACHOLDER_STATUS_STOPPED;
 		placeholderChar1.createToken = true;
-		placeholderChar1.createTokenType = TemplateToken.TOKENTYPE_TEXT;
+		placeholderChar1.createTokenType = new byte[1];
+		placeholderChar1.createTokenType[0] = TemplateToken.TOKENTYPE_TEXT;
 		placeholderChar1.startNewFromPrevious = true;
 		statusDescriptors.put(PLACHOLDER_STATUS_OPENINGCHAR1, placeholderChar1);
 
@@ -131,7 +136,8 @@ public class TemplateTokenizer {
 		actionStopped.nextStatus = new byte[1];
 		actionStopped.nextStatus[0] = PLACHOLDER_STATUS_MEMBERQUERY_STARTED;
 		actionStopped.createToken = true;
-		actionStopped.createTokenType = TemplateToken.TOKENTYPE_ACTIONNAME;
+		actionStopped.createTokenType = new byte[1];
+		actionStopped.createTokenType[0] = TemplateToken.TOKENTYPE_ACTIONNAME;
 		statusDescriptors.put(PLACHOLDER_STATUS_ACTION_STOPPED, actionStopped);
 
 		// == PLACHOLDER_STATUS_MEMBERQUERY_STARTED ==
@@ -150,7 +156,8 @@ public class TemplateTokenizer {
 		memberQueryStopped.nextStatus = new byte[1];
 		memberQueryStopped.nextStatus[0] = PLACHOLDER_STATUS_TERMINATED;
 		memberQueryStopped.createToken = true;
-		memberQueryStopped.createTokenType = TemplateToken.TOKENTYPE_MEMBERQUERY;
+		memberQueryStopped.createTokenType = new byte[1];
+		memberQueryStopped.createTokenType[0] = TemplateToken.TOKENTYPE_MEMBERQUERY;
 		statusDescriptors.put(PLACHOLDER_STATUS_MEMBERQUERY_STOPPED, memberQueryStopped);
 
 		// == PLACHOLDER_STATUS_TERMINATED ==
@@ -160,7 +167,9 @@ public class TemplateTokenizer {
 		placholderTerminator.nextExpectsExplicitChar = true;
 		placholderTerminator.successStatus = PLACHOLDER_STATUS_OPENINGCHAR1;
 		placholderTerminator.failStatus = PLACHOLDER_STATUS_STOPPED;
-		placholderTerminator.dropToken = true; // drop/skip the '}' token
+		placholderTerminator.createToken = true;
+		placholderTerminator.createTokenType = new byte[1];
+		placholderTerminator.createTokenType[0] = TemplateToken.TOKENTYPE_PLACEHOLDEREND;
 		placholderTerminator.nextStartNewTokenBlocked = true;
 		statusDescriptors.put(PLACHOLDER_STATUS_TERMINATED, placholderTerminator);
 
@@ -173,7 +182,9 @@ public class TemplateTokenizer {
 		placholderTerminatorAfterAction.successStatus = PLACHOLDER_STATUS_OPENINGCHAR1;
 		placholderTerminatorAfterAction.failStatus = PLACHOLDER_STATUS_STOPPED;
 		placholderTerminatorAfterAction.createToken = true;
-		placholderTerminatorAfterAction.createTokenType = TemplateToken.TOKENTYPE_ACTIONNAME;
+		placholderTerminatorAfterAction.createTokenType = new byte[2];
+		placholderTerminatorAfterAction.createTokenType[0] = TemplateToken.TOKENTYPE_ACTIONNAME;
+		placholderTerminatorAfterAction.createTokenType[1] = TemplateToken.TOKENTYPE_PLACEHOLDEREND;
 		placholderTerminatorAfterAction.nextStartNewTokenBlocked = true;
 		statusDescriptors.put(PLACHOLDER_STATUS_TERMINATED_AFTER_ACTIONNAME, placholderTerminatorAfterAction);
 	}
@@ -224,13 +235,16 @@ public class TemplateTokenizer {
 
 			// stop here and create the current token
 			if (currentStatus.createToken) {
-				if (startPositionNewToken < i - 1) { // skip emtpy tokens
-					TemplateToken templateToken = new TemplateToken();
-					// do not add the current char (in most cases it is the identifier for the next sequence)
-					templateToken.plainText = template.substring(startPositionNewToken, i - 1);
-					templateToken.tokenType = currentStatus.createTokenType;
-					templateTokens.add(templateToken);
+				if (currentStatus.createTokenType != null) {
+					for (int tokenType = 0; tokenType < currentStatus.createTokenType.length; tokenType++) {
+						TemplateToken templateToken = new TemplateToken();
+						// do not add the current char (in most cases it is the identifier for the next sequence)
+						templateToken.plainText = template.substring(startPositionNewToken, i - 1);
+						templateToken.tokenType = currentStatus.createTokenType[tokenType];
+						templateTokens.add(templateToken);
+					}
 				}
+
 				if (currentStatus.startNewFromPrevious) {
 					startPositionCurrentToken = Math.max(0, i - 1);
 					startPositionNewToken = Math.max(0, i - 1);
@@ -309,12 +323,15 @@ public class TemplateTokenizer {
 		}
 		// create the current token
 		if (currentStatus.createToken) {
-			TemplateToken templateToken = new TemplateToken();
-			// when creating a token explictly we cut off the last character (same behavior as above)
-			templateToken.plainText = template.substring(startPositionNewToken, template.length() - 1);
-			templateToken.tokenType = currentStatus.createTokenType;
-			templateTokens.add(templateToken);
-
+			if (currentStatus.createTokenType != null) {
+				for (int tokenType = 0; tokenType < currentStatus.createTokenType.length; tokenType++) {
+					TemplateToken templateToken = new TemplateToken();
+					// do not add the current char (in most cases it is the identifier for the next sequence)
+					templateToken.plainText = template.substring(startPositionNewToken, template.length() - 1);
+					templateToken.tokenType = currentStatus.createTokenType[tokenType];
+					templateTokens.add(templateToken);
+				}
+			}
 		} else if (!currentStatus.dropToken) {
 			// append everything thats left as text token.
 			TemplateToken templateToken = new TemplateToken();

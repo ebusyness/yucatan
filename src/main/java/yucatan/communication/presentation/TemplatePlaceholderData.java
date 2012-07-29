@@ -32,7 +32,25 @@ public class TemplatePlaceholderData extends TemplatePlaceholder {
 		}
 		return fetchedScope.toString();
 	}
-	
+
+	@Override
+	/**
+	 * Add the passed token to the placeholder.
+	 * 
+	 * @param token The token to add.
+	 */
+	public void addToken(TemplateToken token) {
+		super.addToken(token);
+		if (token.tokenType == TemplateToken.TOKENTYPE_PLACEHOLDEREND) {
+			if (this.memberQuery == null) {
+				log.error("Could not create a valid placeholder. The member query token is missing.");
+				this.status = TemplatePlaceholder.STATUS_ERROR;
+			} else {
+				this.status = TemplatePlaceholder.STATUS_FINISHED;
+			}
+		}
+	}
+
 	/**
 	 * Fetch the specified data scope represented by {@link #memberQuery}.
 	 * 

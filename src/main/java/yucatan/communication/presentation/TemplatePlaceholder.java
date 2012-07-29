@@ -15,6 +15,11 @@ public abstract class TemplatePlaceholder {
 	public static final byte STATUS_FINISHED = 1;
 
 	/**
+	 * The placeholder stopped but missing a token.
+	 */
+	public static final byte STATUS_ERROR = 2;
+
+	/**
 	 * The token that contains the name of the placeholder action.
 	 */
 	protected TemplateToken actionName;
@@ -32,7 +37,7 @@ public abstract class TemplatePlaceholder {
 	/**
 	 * The current status of the placeholder.
 	 */
-	public byte status = STATUS_UNFINISHED;
+	protected byte status = STATUS_UNFINISHED;
 
 	// TODO -> planned token
 	// private TemplateToken formatter;
@@ -49,11 +54,11 @@ public abstract class TemplatePlaceholder {
 	 */
 	public static TemplatePlaceholder createPlaceholder(TemplateToken token, Object scope) {
 		if( token.tokenType != TemplateToken.TOKENTYPE_ACTIONNAME ) {
-			log.error("Could not create Placeholder. The passed token is not of type action name.");
+			log.error("Could not create placeholder. The passed token is not of type action name.");
 			return null;
 		}
 		if (token.plainText == null) {
-			log.error("Could not create Placeholder. The passed token has no plainText.");
+			log.error("Could not create placeholder. The passed token has no plainText.");
 			return null;
 		}
 		TemplatePlaceholder placeholder = null;
@@ -64,7 +69,7 @@ public abstract class TemplatePlaceholder {
 			placeholder = new TemplatePlaceholderList(scope);
 		}
 		if( placeholder == null ) {
-			log.error("Could not create Placeholder. The passed token action is unknown.");
+			log.error("Could not create placeholder. The passed token action is unknown.");
 			return null;
 		}
 		placeholder.addToken(token);
@@ -80,13 +85,30 @@ public abstract class TemplatePlaceholder {
 		this.dataScope = scope;
 	}
 
+	/**
+	 * Add the passed token to the placeholder.
+	 * 
+	 * @param token The token to add
+	 */
 	public void addToken(TemplateToken token) {
 		if (token.tokenType == TemplateToken.TOKENTYPE_ACTIONNAME) {
-			actionName = token;
+			this.actionName = token;
 		}
 		if (token.tokenType == TemplateToken.TOKENTYPE_MEMBERQUERY) {
-			memberQuery = token;
+			this.memberQuery = token;
 		}
+		if (token.tokenType == TemplateToken.TOKENTYPE_PLACEHOLDEREND) {
+			this.status = TemplatePlaceholder.STATUS_FINISHED;
+		}
+	}
+
+	/**
+	 * Provides the status of the placeholder.
+	 * 
+	 * @return the status code.
+	 */
+	public byte currentStatus() {
+		return this.status;
 	}
 
 }

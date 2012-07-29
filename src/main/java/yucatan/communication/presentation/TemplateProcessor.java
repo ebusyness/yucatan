@@ -2,7 +2,6 @@ package yucatan.communication.presentation;
 
 import java.util.ArrayList;
 
-
 /**
  * This class implements the yucatan template processor.
  * <p>
@@ -34,24 +33,26 @@ public final class TemplateProcessor {
 		String generatedText = "";
 
 		for (TemplateToken token : templateTokens) {
-
+			// append text tokens
 			if (token.tokenType == TemplateToken.TOKENTYPE_TEXT) {
 				generatedText += token.plainText;
 				continue;
 			}
 
-			// collect placeholder tokens
+			// collect tokens for placeholders
 			if (token.tokenType == TemplateToken.TOKENTYPE_ACTIONNAME) {
 				currentPlaceholder = TemplatePlaceholder.createPlaceholder(token, dataScope);
-			}
-			if (token.tokenType == TemplateToken.TOKENTYPE_MEMBERQUERY) {
+			} else if (currentPlaceholder != null) {
 				currentPlaceholder.addToken(token);
-				if (currentPlaceholder != null) {
-					generatedText += currentPlaceholder.toString();
-				}
+			}
+
+			// append placeholder text
+			if (currentPlaceholder != null && currentPlaceholder.currentStatus() == TemplatePlaceholder.STATUS_FINISHED) {
+				generatedText += currentPlaceholder.toString();
+				// throw placeholder away
+				currentPlaceholder = null;
 			}
 		}
 		return generatedText;
 	}
-
 }
