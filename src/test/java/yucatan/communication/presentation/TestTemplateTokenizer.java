@@ -90,7 +90,6 @@ public class TestTemplateTokenizer {
 		// simple placeholder after an simple placeholder
 		// - two directly following simple placeholders -
 		String template = "<html><body><h1>${@odd}${@count}</h1><ul>";
-// assertEquals("<html><body><h1><PH><PH></h1><ul>", TemplateProcessor.getTokens(new Object(), template));
 
 		// same test string but this time have a look at the tokens
 		// * getTokens -> analyze tokens

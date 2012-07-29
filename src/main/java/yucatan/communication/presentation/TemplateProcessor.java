@@ -1,7 +1,5 @@
 package yucatan.communication.presentation;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 
 
@@ -32,6 +30,7 @@ public final class TemplateProcessor {
 		}
 
 		ArrayList<TemplateToken> templateTokens = TemplateTokenizer.getTokens(template);
+		TemplatePlaceholder currentPlaceholder = null;
 		String generatedText = "";
 
 		for (TemplateToken token : templateTokens) {
@@ -40,43 +39,15 @@ public final class TemplateProcessor {
 				generatedText += token.plainText;
 				continue;
 			}
-			// TODO
-			// Methods to call
-			// get( )
-			// getById( String ), getByQuery( String )
-			
+
+			// collect placeholder tokens
 			if (token.tokenType == TemplateToken.TOKENTYPE_ACTIONNAME) {
-				
-				
+				currentPlaceholder = TemplatePlaceholder.createPlaceholder(token, dataScope);
 			}
 			if (token.tokenType == TemplateToken.TOKENTYPE_MEMBERQUERY) {
-
-				Method getMethod = null;
-				try {
-					getMethod = dataScope.getClass().getDeclaredMethod("get", Object.class);
-				} catch (SecurityException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (NoSuchMethodException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-	
-				if (getMethod != null) {
-					Object[] invokeArgs = new Object[1];
-					invokeArgs[0] = token.plainText;
-					try {
-						generatedText += getMethod.invoke(dataScope, invokeArgs);
-					} catch (IllegalArgumentException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (IllegalAccessException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					} catch (InvocationTargetException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
+				currentPlaceholder.addToken(token);
+				if (currentPlaceholder != null) {
+					generatedText += currentPlaceholder.toString();
 				}
 			}
 		}
