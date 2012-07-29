@@ -372,7 +372,7 @@ public class TestTemplateTokenizer {
 		TemplateToken token1 = tokens.get(1);
 		TemplateToken token2 = tokens.get(2);
 		TemplateToken token3 = tokens.get(3);
-// TemplateToken token4 = tokens.get(4);
+		TemplateToken token4 = tokens.get(4);
 
 		assertEquals(TemplateToken.TOKENTYPE_TEXT, token0.tokenType);
 		assertEquals("<h1>", token0.plainText);
@@ -385,8 +385,8 @@ public class TestTemplateTokenizer {
 
 		assertEquals(TemplateToken.TOKENTYPE_PLACEHOLDEREND, token3.tokenType);
 
-// assertEquals("</h1>", token4.plainText);
-// assertEquals(TemplateToken.TOKENTYPE_TEXT, token4.tokenType);
+		assertEquals("</h1>", token4.plainText);
+		assertEquals(TemplateToken.TOKENTYPE_TEXT, token4.tokenType);
 
 		assertEquals(5, tokens.size());
 	}
