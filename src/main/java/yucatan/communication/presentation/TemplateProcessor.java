@@ -30,12 +30,12 @@ public final class TemplateProcessor {
 
 		ArrayList<TemplateToken> templateTokens = TemplateTokenizer.getTokens(template);
 		TemplatePlaceholder currentPlaceholder = null;
-		String generatedText = "";
+		StringBuilder generatedText = new StringBuilder();
 
 		for (TemplateToken token : templateTokens) {
 			// append text tokens
 			if (token.tokenType == TemplateToken.TOKENTYPE_TEXT) {
-				generatedText += token.plainText;
+				generatedText.append(token.plainText);
 				continue;
 			}
 
@@ -48,11 +48,11 @@ public final class TemplateProcessor {
 
 			// append placeholder text
 			if (currentPlaceholder != null && currentPlaceholder.currentStatus() == TemplatePlaceholder.STATUS_FINISHED) {
-				generatedText += currentPlaceholder.toString();
+				generatedText.append(currentPlaceholder.toString());
 				// throw placeholder away
 				currentPlaceholder = null;
 			}
 		}
-		return generatedText;
+		return generatedText.toString();
 	}
 }

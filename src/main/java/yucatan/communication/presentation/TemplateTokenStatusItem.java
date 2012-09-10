@@ -81,27 +81,27 @@ public class TemplateTokenStatusItem {
 	public TemplateTokenStatusItem() {
 	}
 
-	/**
-	 * A simple inspector method for debugging purposes.
+	/*
+	 * (non-Javadoc)
 	 * 
-	 * @param instance The instance to inspect.
-	 * @return a JSON-like String with all properies of the instance.
+	 * @see java.lang.Object#toString()
 	 */
-	public static String inspectProperties(TemplateTokenStatusItem instance) {
+	@Override
+	public String toString() {
 		String output = "{";
-		String expectedC = instance.nextExpectsExplicitChar == true ? "'" + instance.nextExpectedChar + "'" : "<undefined>";
+		String expectedC = this.nextExpectsExplicitChar == true ? "'" + this.nextExpectedChar + "'" : "<undefined>";
 		output += "nextExpectedChar:" + expectedC + ",";
-		output += "nextExpectsExplicitChar:" + instance.nextExpectsExplicitChar + ",";
-		output += "successStatus:" + instance.successStatus + ",";
-		output += "failStatus:" + instance.failStatus + ",";
+		output += "nextExpectsExplicitChar:" + this.nextExpectsExplicitChar + ",";
+		output += "successStatus:" + this.successStatus + ",";
+		output += "failStatus:" + this.failStatus + ",";
 		output += "nextStatus:";
-		if (instance.nextStatus != null) {
+		if (this.nextStatus != null) {
 			output += "[";
-			for (int i = 0; i < instance.nextStatus.length; i++) {
+			for (int i = 0; i < this.nextStatus.length; i++) {
 				if (i != 0) {
 					output += ",";
 				}
-				output += instance.nextStatus[i];
+				output += this.nextStatus[i];
 			}
 			output += "],";
 			;
@@ -109,24 +109,24 @@ public class TemplateTokenStatusItem {
 			output += "null,";
 		}
 		output += "terminatedBy:";
-		if (instance.terminatedBy != null) {
+		if (this.terminatedBy != null) {
 			output += "[";
-			for (int i = 0; i < instance.terminatedBy.length; i++) {
+			for (int i = 0; i < this.terminatedBy.length; i++) {
 				if (i != 0) {
 					output += ",";
 				}
-				output += "'" + instance.terminatedBy[i] + "'";
+				output += "'" + this.terminatedBy[i] + "'";
 			}
 			output += "],";
 		} else {
 			output += "null,";
 		}
-		output += "revaluateOnfail:" + instance.revaluateOnfail + ",";
-		output += "startNewToken:" + instance.startNewToken + ",";
-		output += "startNewFromPrevious:" + instance.startNewFromPrevious + ",";
-		output += "nextStartNewTokenBlocked:" + instance.nextStartNewTokenBlocked + ",";
-		output += "createToken:" + instance.createToken + ",";
-		output += "dropToken:" + instance.dropToken;
+		output += "revaluateOnfail:" + this.revaluateOnfail + ",";
+		output += "startNewToken:" + this.startNewToken + ",";
+		output += "startNewFromPrevious:" + this.startNewFromPrevious + ",";
+		output += "nextStartNewTokenBlocked:" + this.nextStartNewTokenBlocked + ",";
+		output += "createToken:" + this.createToken + ",";
+		output += "dropToken:" + this.dropToken;
 		output += "}";
 		return output;
 	}

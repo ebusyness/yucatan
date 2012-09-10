@@ -2,6 +2,9 @@ package yucatan.communication.presentation;
 
 import org.apache.log4j.Logger;
 
+/**
+ * This abstract class provides base functionality for yucatan placeholders. It also provides a static factory method for placeholders.
+ */
 public abstract class TemplatePlaceholder {
 
 	/**
@@ -39,15 +42,18 @@ public abstract class TemplatePlaceholder {
 	 */
 	protected byte status = STATUS_UNFINISHED;
 
-	// TODO -> planned token
+	// TODO -> planned token type
 	// private TemplateToken formatter;
 
 	/**
 	 * The log4j logger of this class.
 	 */
-	static Logger log = Logger.getLogger(TemplatePlaceholder.class);
+	private static Logger log = Logger.getLogger(TemplatePlaceholder.class);
 	
 	/**
+	 * Placeholder factory method. Tries to create a placeholder instance from action token. Please note: the passed token has to have a {@link TemplateToken#tokenType} that equals
+	 * {@link TemplateToken#TOKENTYPE_ACTIONNAME}.
+	 * 
 	 * @param token
 	 * @param scope
 	 * @return

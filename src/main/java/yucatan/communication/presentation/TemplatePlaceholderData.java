@@ -9,7 +9,7 @@ public class TemplatePlaceholderData extends TemplatePlaceholder {
 	/**
 	 * The log4j logger of this class.
 	 */
-	static Logger log = Logger.getLogger(TemplatePlaceholderData.class);
+	private static Logger log = Logger.getLogger(TemplatePlaceholderData.class);
 
 	/**
 	 * Constructs a data placeholder.
@@ -26,6 +26,13 @@ public class TemplatePlaceholderData extends TemplatePlaceholder {
 	 * @return the placeholder String representation. Empty/invalid placeholders will be resolved to an empty String.
 	 */
 	public String toString() {
+		if (this.status != TemplatePlaceholder.STATUS_FINISHED) {
+			if( this.status == TemplatePlaceholder.STATUS_ERROR ) {
+				log.error("Try to render an invalid placeholder. This may fail.");
+			} else {
+				log.error("Try to render an unfinished placeholder. This may fail.");
+			}
+		}
 		Object fetchedScope = this.fetchTheScope();
 		if (fetchedScope == null) {
 			return "";
