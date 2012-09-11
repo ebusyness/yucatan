@@ -10,17 +10,12 @@ public abstract class TemplatePlaceholder {
 	/**
 	 * The placeholder is not finished. There are still missing tokens.
 	 */
-	public static final byte STATUS_UNFINISHED = 0;
+	private static final byte STATUS_OPENED = 0;
 
 	/**
-	 * The placeholder is finished. All tokens are present.
+	 * The placeholder is valid and ready to use. All tokens are added.
 	 */
-	public static final byte STATUS_FINISHED = 1;
-
-	/**
-	 * The placeholder stopped but missing a token.
-	 */
-	public static final byte STATUS_ERROR = 2;
+	private static final byte STATUS_CLOSED = 1;
 
 	/**
 	 * The token that contains the name of the placeholder action.
@@ -40,7 +35,7 @@ public abstract class TemplatePlaceholder {
 	/**
 	 * The current status of the placeholder.
 	 */
-	protected byte status = STATUS_UNFINISHED;
+	protected byte status = STATUS_OPENED;
 
 	// TODO -> planned token type
 	// private TemplateToken formatter;
@@ -49,7 +44,7 @@ public abstract class TemplatePlaceholder {
 	 * The log4j logger of this class.
 	 */
 	private static Logger log = Logger.getLogger(TemplatePlaceholder.class);
-	
+
 	/**
 	 * Placeholder factory method. Tries to create a placeholder instance from action token. Please note: the passed token has to have a {@link TemplateToken#tokenType} that equals
 	 * {@link TemplateToken#TOKENTYPE_ACTIONNAME}.
@@ -59,7 +54,7 @@ public abstract class TemplatePlaceholder {
 	 * @return
 	 */
 	public static TemplatePlaceholder createPlaceholder(TemplateToken token, Object scope) {
-		if( token.tokenType != TemplateToken.TOKENTYPE_ACTIONNAME ) {
+		if (token.tokenType != TemplateToken.TOKENTYPE_ACTIONNAME) {
 			log.error("Could not create placeholder. The passed token is not of type action name.");
 			return null;
 		}
@@ -74,7 +69,7 @@ public abstract class TemplatePlaceholder {
 		if (token.plainText.equals("list")) {
 			placeholder = new TemplatePlaceholderList(scope);
 		}
-		if( placeholder == null ) {
+		if (placeholder == null) {
 			log.error("Could not create placeholder. The passed token action is unknown.");
 			return null;
 		}
@@ -95,8 +90,15 @@ public abstract class TemplatePlaceholder {
 	 * Add the passed token to the placeholder.
 	 * 
 	 * @param token The token to add
+	 * @throws IllegalStateException
 	 */
-	public void addToken(TemplateToken token) {
+	public void addToken(TemplateToken token) throws IllegalStateException {
+		if (isClosed()) {
+			throw new IllegalStateException("The current placeholder is already closed. It is not possible to add more tokens.");
+		}
+		if (token == null) {
+			throw new IllegalArgumentException("Passed token is null.");
+		}
 		if (token.tokenType == TemplateToken.TOKENTYPE_ACTIONNAME) {
 			this.actionName = token;
 		}
@@ -104,17 +106,52 @@ public abstract class TemplatePlaceholder {
 			this.memberQuery = token;
 		}
 		if (token.tokenType == TemplateToken.TOKENTYPE_PLACEHOLDEREND) {
-			this.status = TemplatePlaceholder.STATUS_FINISHED;
+			this.close();
 		}
 	}
 
 	/**
-	 * Provides the status of the placeholder.
+	 * Indicates that the placeholder is valid. (All required tokens are present)
 	 * 
 	 * @return the status code.
 	 */
-	public byte currentStatus() {
-		return this.status;
+	public boolean isValid() {
+		if (this.actionName == null || this.actionName.tokenType != TemplateToken.TOKENTYPE_ACTIONNAME || this.memberQuery == null
+				|| this.memberQuery.tokenType != TemplateToken.TOKENTYPE_MEMBERQUERY) {
+			return false;
+		}
+		return true;
 	}
 
+	/**
+	 * Indicates that the placeholder is complete and ready for usage.
+	 * 
+	 * @return
+	 */
+	public boolean isClosed() {
+		return this.status == TemplatePlaceholder.STATUS_CLOSED;
+	}
+
+	/**
+	 * @return The rendered Placeholder
+	 */
+	abstract public String doRender();
+
+	@Override
+	public String toString() {
+		return getClass().getSimpleName() + "=> { actionName: {" + actionName + "}, memberQuery: {" + memberQuery + "}, dataScope: {" + dataScope + "}, status: " + status + "}";
+	}
+
+	/**
+	 * Closes the Placeholder. This only possible in an vaild placeholder state.
+	 * 
+	 * @throws IllegalStateException
+	 */
+	protected void close() throws IllegalStateException {
+		if (!isValid()) {
+			throw new IllegalStateException("The current placeholder is in an invalid state. An expected TemplateToken is missing.");
+		} else {
+			this.status = TemplatePlaceholder.STATUS_CLOSED;
+		}
+	}
 }

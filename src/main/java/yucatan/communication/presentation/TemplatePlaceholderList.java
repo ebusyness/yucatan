@@ -6,7 +6,7 @@ public class TemplatePlaceholderList extends TemplatePlaceholder {
 		super(scope);
 	}
 
-	public String toString() {
+	public String doRender() {
 		return "LIST";
 	}
 }

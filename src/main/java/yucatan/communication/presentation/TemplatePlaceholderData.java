@@ -25,12 +25,12 @@ public class TemplatePlaceholderData extends TemplatePlaceholder {
 	 * Render the placeholder to String.
 	 * @return the placeholder String representation. Empty/invalid placeholders will be resolved to an empty String.
 	 */
-	public String toString() {
-		if (this.status != TemplatePlaceholder.STATUS_FINISHED) {
-			if( this.status == TemplatePlaceholder.STATUS_ERROR ) {
-				log.error("Try to render an invalid placeholder. This may fail.");
+	public String doRender() {
+		if (!this.isClosed()) {
+			if (!this.isValid()) {
+				log.error("Try to render a placeholder within an ivalid state. This may fail.");
 			} else {
-				log.error("Try to render an unfinished placeholder. This may fail.");
+				log.error("Try to render an incomplte placeholder. This may fail.");
 			}
 		}
 		Object fetchedScope = this.fetchTheScope();
@@ -38,24 +38,6 @@ public class TemplatePlaceholderData extends TemplatePlaceholder {
 			return "";
 		}
 		return fetchedScope.toString();
-	}
-
-	@Override
-	/**
-	 * Add the passed token to the placeholder.
-	 * 
-	 * @param token The token to add.
-	 */
-	public void addToken(TemplateToken token) {
-		super.addToken(token);
-		if (token.tokenType == TemplateToken.TOKENTYPE_PLACEHOLDEREND) {
-			if (this.memberQuery == null) {
-				log.error("Could not create a valid placeholder. The member query token is missing.");
-				this.status = TemplatePlaceholder.STATUS_ERROR;
-			} else {
-				this.status = TemplatePlaceholder.STATUS_FINISHED;
-			}
-		}
 	}
 
 	/**
