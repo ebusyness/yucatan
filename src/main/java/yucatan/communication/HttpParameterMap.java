@@ -77,7 +77,7 @@ public final class HttpParameterMap implements ReadOnlyMemberAccessor {
 	 * @return the requested value or null
 	 */
 	@Override
-	public HttpParameterValue get(String key) {
+	public Object get(String key) {
 		return parameters.get(key);
 	}
 }
