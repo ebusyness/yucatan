@@ -51,7 +51,7 @@ public abstract class TemplatePlaceholder {
 	 * 
 	 * @param token
 	 * @param scope
-	 * @return
+	 * @return the placeholder.
 	 */
 	public static TemplatePlaceholder createPlaceholder(TemplateToken token, Object scope) {
 		if (token.tokenType != TemplateToken.TOKENTYPE_ACTIONNAME) {
@@ -126,7 +126,7 @@ public abstract class TemplatePlaceholder {
 	/**
 	 * Indicates that the placeholder is complete and ready for usage.
 	 * 
-	 * @return
+	 * @return true or false.
 	 */
 	public boolean isClosed() {
 		return this.status == TemplatePlaceholder.STATUS_CLOSED;

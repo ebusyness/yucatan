@@ -6,9 +6,6 @@ import java.util.HashMap;
 
 import org.junit.Test;
 
-import yucatan.communication.HttpParameterMap;
-import yucatan.communication.SequenceDataMap;
-
 /**
  * JUnit tests for {@link yucatan.communication.SequenceDataMap}.
  * 
@@ -55,12 +52,13 @@ public class TestSequenceDataMap {
 	@Test
 	public void testPut() {
 		transportItem = new SequenceDataMap();
+		HashMap<String, Object> initalTransportData = null;
 
 		// null parameter check
-		assertEquals(null, transportItem.put(null, null)); // the old value is null too
+		assertEquals(null, transportItem.put(null, initalTransportData)); // the old value is null too
 		assertEquals(null, transportItem.get(null));
 
-		assertEquals(null, transportItem.put("null", null)); // still the old value is null
+		assertEquals(null, transportItem.put("null", initalTransportData)); // still the old value is null
 		assertEquals(null, transportItem.get("null"));
 
 		// put and get a string

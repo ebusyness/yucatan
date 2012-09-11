@@ -5,13 +5,13 @@ import java.util.ArrayList;
 /**
  * This class implements the yucatan template processor.
  * <p>
- * currently implemented format of template placeholders: ${@<action-name>(<member-query>)}
+ * currently implemented format of template placeholders: ${&#64;<action-name>(<member-query>)}
  * </p>
  * <h3>Examples</h3>
  * <ul>
- * <li>${@data(myProperty)}</li>
- * <li>${@data(myObject.myMethod)}</li>
- * <li>${@list(myObject.myProperty)}</li>
+ * <li>${&#64;data(myProperty)}</li>
+ * <li>${&#64;data(myObject.myMethod)}</li>
+ * <li>${&#64;list(myObject.myProperty)}</li>
  * </ul>
  */
 public final class TemplateProcessor {
