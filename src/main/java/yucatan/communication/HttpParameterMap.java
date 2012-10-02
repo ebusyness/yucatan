@@ -1,6 +1,7 @@
 package yucatan.communication;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * First draft of a http parameter map.
@@ -10,7 +11,7 @@ public final class HttpParameterMap implements ReadOnlyMemberAccessor {
 	/**
 	 * The {@link HashMap}&lt;String, String&gt which contains the key value pairs.
 	 */
-	private HashMap<String, HttpParameterValue> parameters;
+	private Map<String, HttpParameterValue> parameters;
 
 	/**
 	 * Create empty HttpParameterMap.
@@ -24,7 +25,7 @@ public final class HttpParameterMap implements ReadOnlyMemberAccessor {
 	 * 
 	 * @param initalData initial parameters
 	 */
-	public HttpParameterMap(HashMap<String, HttpParameterValue> initalData) {
+	public HttpParameterMap(Map<String, HttpParameterValue> initalData) {
 		// create empty parameters Hashmap
 		parameters = new HashMap<String, HttpParameterValue>();
 
