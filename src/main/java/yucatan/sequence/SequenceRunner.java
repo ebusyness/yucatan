@@ -51,7 +51,7 @@ public class SequenceRunner extends Command {
 	/**
 	 * The log4j logger of this class.
 	 */
-	static Logger log = Logger.getLogger(SequenceRunner.class);
+	private static Logger log = Logger.getLogger(SequenceRunner.class);
 
 	/**
 	 * Runs the specified sequence. Invokes the commands of the passed sequence location.

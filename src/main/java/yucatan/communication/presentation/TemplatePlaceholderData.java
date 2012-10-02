@@ -46,15 +46,15 @@ public class TemplatePlaceholderData extends TemplatePlaceholder {
 	 * @return The data object.
 	 */
 	private Object fetchTheScope() {
-		if (this.memberQuery == null || this.memberQuery.plainText == null) {
+		if (this.getMemberQuery() == null || this.getMemberQuery().plainText == null) {
 			return null;
 		}
-		Object fetechdScope = this.dataScope;
-		String[] queryParts = this.memberQuery.plainText.split("\\.");
+		Object fetechdScope = this.getDataScope();
+		String[] queryParts = this.getMemberQuery().plainText.split("\\.");
 
 		if (queryParts.length == 0) {
 			queryParts = new String[1];
-			queryParts[0] = this.memberQuery.plainText;
+			queryParts[0] = this.getMemberQuery().plainText;
 		}
 		for (int i = 0; i < queryParts.length; i++) {
 			fetechdScope = this.invokeGetMethod(fetechdScope, queryParts[i]);
@@ -71,15 +71,13 @@ public class TemplatePlaceholderData extends TemplatePlaceholder {
 	 */
 	private Object invokeGetMethod(Object scope, String queryPart) {
 		if (scope == null) {
-			log.error("Placeholder error: passed scope is null @ TemplatePlaceholderData.invokeGetMethod(). memberQuery: '" + this.memberQuery.plainText
-					+ "'. Current memberQuery part to get:'" + queryPart
-					+ "'");
+			log.error("Placeholder error: passed scope is null @ TemplatePlaceholderData.invokeGetMethod(). memberQuery: '" + this.getMemberQuery().plainText
+					+ "'. Current memberQuery part to get:'" + queryPart + "'");
 			return null;
 		}
 		if (queryPart == null) {
-			log.error("Placeholder error: queryPart is null @ TemplatePlaceholderData.invokeGetMethod. memberQuery: '" + this.memberQuery.plainText
-					+ "'. Current memberQuery part to get:'"
-					+ queryPart + "'");
+			log.error("Placeholder error: queryPart is null @ TemplatePlaceholderData.invokeGetMethod. memberQuery: '" + this.getMemberQuery().plainText
+					+ "'. Current memberQuery part to get:'" + queryPart + "'");
 			return null;
 		}
 		Method getMethod = null;
@@ -87,13 +85,11 @@ public class TemplatePlaceholderData extends TemplatePlaceholder {
 		try {
 			getMethod = scope.getClass().getDeclaredMethod("get", Object.class);
 		} catch (SecurityException e) {
-			log.error(
-					"Placeholder error: Could not access the get method of memberQuery '" + this.memberQuery.plainText + "'. Current memberQuery part to get:'" + queryPart + "'",
-					e);
+			log.error("Placeholder error: Could not access the get method of memberQuery '" + this.getMemberQuery().plainText + "'. Current memberQuery part to get:'" + queryPart
+					+ "'", e);
 		} catch (NoSuchMethodException e) {
-			log.error(
-					"Placeholder error: Could not access the get method of memberQuery '" + this.memberQuery.plainText + "'. Current memberQuery part to get:'" + queryPart + "'",
-					e);
+			log.error("Placeholder error: Could not access the get method of memberQuery '" + this.getMemberQuery().plainText + "'. Current memberQuery part to get:'" + queryPart
+					+ "'", e);
 		}
 		if (getMethod != null) {
 			Object[] invokeArgs = new Object[1];
@@ -101,16 +97,16 @@ public class TemplatePlaceholderData extends TemplatePlaceholder {
 			try {
 				newScope = getMethod.invoke(scope, invokeArgs);
 			} catch (IllegalArgumentException e) {
-				log.error("Placeholder error: Could not invoke the get method of memberQuery '" + this.memberQuery.plainText + "'. Current memberQuery part to get:'" + queryPart
-						+ "'", e);
+				log.error("Placeholder error: Could not invoke the get method of memberQuery '" + this.getMemberQuery().plainText + "'. Current memberQuery part to get:'"
+						+ queryPart + "'", e);
 				return null;
 			} catch (IllegalAccessException e) {
-				log.error("Placeholder error: Could not invoke the get method of memberQuery '" + this.memberQuery.plainText + "'. Current memberQuery part to get:'" + queryPart
-						+ "'", e);
+				log.error("Placeholder error: Could not invoke the get method of memberQuery '" + this.getMemberQuery().plainText + "'. Current memberQuery part to get:'"
+						+ queryPart + "'", e);
 				return null;
 			} catch (InvocationTargetException e) {
-				log.error("Placeholder error: Could not invoke the get method of memberQuery '" + this.memberQuery.plainText + "'. Current memberQuery part to get:'" + queryPart
-						+ "'", e);
+				log.error("Placeholder error: Could not invoke the get method of memberQuery '" + this.getMemberQuery().plainText + "'. Current memberQuery part to get:'"
+						+ queryPart + "'", e);
 				return null;
 			}
 		}

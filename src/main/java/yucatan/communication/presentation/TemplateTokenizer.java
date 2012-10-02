@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 class TemplateTokenizer {
+	/*
+	 * Hide Utility Class Constructor.
+	 */
+	private TemplateTokenizer() {
+	}
 
 	/**
 	 * Indicates that the status is not subject to change.

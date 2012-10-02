@@ -20,22 +20,22 @@ public abstract class TemplatePlaceholder {
 	/**
 	 * The token that contains the name of the placeholder action.
 	 */
-	protected TemplateToken actionName;
+	private TemplateToken actionName;
 
 	/**
 	 * The token that contains the memberQuery for a placeholder.
 	 */
-	protected TemplateToken memberQuery;
+	private TemplateToken memberQuery;
 
 	/**
 	 * The base data scope of the placeholder. In most cases this is a instance of {@link yucatan.communication.SequenceDataMap}.
 	 */
-	protected Object dataScope;
+	private Object dataScope;
 
 	/**
 	 * The current status of the placeholder.
 	 */
-	protected byte status = STATUS_OPENED;
+	private byte status = STATUS_OPENED;
 
 	// TODO -> planned token type
 	// private TemplateToken formatter;
@@ -153,5 +153,23 @@ public abstract class TemplatePlaceholder {
 		} else {
 			this.status = TemplatePlaceholder.STATUS_CLOSED;
 		}
+	}
+	
+	/**
+	 * Provide access to the meberQuery TemplateToken.
+	 * 
+	 * @return The memberQuery TemplateToken.
+	 */
+	protected TemplateToken getMemberQuery() {
+		return memberQuery;
+	}
+
+	/**
+	 * Provide access to the dataScope.
+	 * 
+	 * @return The dataScope of TemplateToken.
+	 */
+	protected Object getDataScope() {
+		return dataScope;
 	}
 }

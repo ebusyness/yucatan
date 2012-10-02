@@ -16,6 +16,12 @@ import java.util.List;
  */
 final class TemplateProcessor {
 
+	/*
+	 * Hide Utility Class Constructor.
+	 */
+	private TemplateProcessor() {
+	}
+
 	/**
 	 * Template render method. This method may be called recursively.
 	 * 

@@ -11,7 +11,7 @@ public abstract class ByPositionComparable implements Comparable<ByPositionCompa
 	/**
 	 * The position property defines the sort order in a sorted list.
 	 */
-	protected Float position;
+	private Float position;
 
 	/**
 	 * Gets the value of the position property.

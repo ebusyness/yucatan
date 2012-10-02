@@ -28,7 +28,7 @@ public class TemplateToken {
 	public static final byte TOKENTYPE_PLACEHOLDEREND = 3;
 
 	/**
-	 * The plainTextPart stores the plain text of the tokem.
+	 * The plainTextPart stores the plain text of the token.
 	 */
 	public String plainText;
 

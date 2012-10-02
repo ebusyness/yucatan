@@ -25,6 +25,12 @@ import yucatan.sequence.generated.XmlTypeSequencesList;
  */
 final class SequencesManager {
 
+	/*
+	 * Hide Utility Class Constructor.
+	 */
+	private SequencesManager() {
+	}
+
 	/**
 	 * Sequence found.
 	 */
