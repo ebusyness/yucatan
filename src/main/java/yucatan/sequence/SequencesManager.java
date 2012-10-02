@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
@@ -52,7 +53,7 @@ public class SequencesManager {
 	/**
 	 * HashMap of registered sequences.
 	 */
-	private static HashMap<String, XmlTypeSequence> sequences = new HashMap<String, XmlTypeSequence>();
+	private static Map<String, XmlTypeSequence> sequences = new HashMap<String, XmlTypeSequence>();
 
 	/**
 	 * The log4j logger of this class.
@@ -85,7 +86,7 @@ public class SequencesManager {
 	 * @param sequenceLocation The location of sequence to run &lt;sequenceCollectionName-sequenceName&gt;
 	 * @return Returns the command names of specified sequence or null.
 	 */
-	public static ArrayList<String> inspectSequence(String sequenceLocation) {
+	public static List<String> inspectSequence(String sequenceLocation) {
 		if (sequenceLocation == null) {
 			return null;
 		}

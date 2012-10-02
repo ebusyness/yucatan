@@ -2,14 +2,12 @@ package yucatan.sequence;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import junit.framework.Assert;
 
 import org.junit.Test;
 
-import yucatan.sequence.SequencesManager;
 import yucatan.sequence.generated.XmlTypeCommand;
 
 /**
@@ -51,7 +49,7 @@ public class TestSequencesManager {
 
 		// prepare register test sequence collection
 		SequencesManager.registerSequenceCollection("category", "yucatan.sequences");
-		ArrayList<String> sequenceItemNames = SequencesManager.inspectSequence("category-show");
+		List<String> sequenceItemNames = SequencesManager.inspectSequence("category-show");
 		String resultString = "";
 		for (String sequenceItemName : sequenceItemNames) {
 			resultString += sequenceItemName;
