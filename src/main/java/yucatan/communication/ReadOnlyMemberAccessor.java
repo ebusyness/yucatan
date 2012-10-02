@@ -7,5 +7,5 @@ public interface ReadOnlyMemberAccessor {
 	 * @param key The
 	 * @return The requested Object or null;
 	 */
-	public Object get(String key);
+	Object get(String key);
 }
