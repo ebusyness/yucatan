@@ -1,5 +1,7 @@
 package yucatan.sequence.util;
 
+// TODO -> It would be better to use a Comperator here
+
 /**
  * Base class that implements Compareable to sort elements by attribute position (ascending).
  * 
@@ -29,7 +31,7 @@ public abstract class ByPositionComparable implements Comparable<ByPositionCompa
 	@Override
 	public int compareTo(ByPositionComparable compareItem) {
 		if (compareItem == null) {
-			return 0;
+			return 1;
 		}
 		if (compareItem.getPosition() == null) {
 			return 0;
