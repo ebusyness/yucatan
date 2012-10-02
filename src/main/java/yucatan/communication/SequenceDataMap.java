@@ -1,6 +1,7 @@
 package yucatan.communication;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * First draft of a transport item map.
@@ -8,9 +9,9 @@ import java.util.HashMap;
 public class SequenceDataMap {
 
 	/**
-	 * The {@link HashMap} which contains the key value pairs.
+	 * The {@link Map} which contains the key value pairs.
 	 */
-	private HashMap<String, Object> dataItems;
+	private Map<String, Object> dataItems;
 
 	/**
 	 * Create empty SequenceDataMap.
@@ -24,7 +25,7 @@ public class SequenceDataMap {
 	 * 
 	 * @param initalData The initial data {@link HashMap} to register.
 	 */
-	public SequenceDataMap(HashMap<String, Object> initalData) {
+	public SequenceDataMap(Map<String, Object> initalData) {
 		// create hash map instance
 		dataItems = new HashMap<String, Object>();
 
