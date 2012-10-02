@@ -2,6 +2,8 @@ package yucatan.communication.presentation;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class TemplateTokenizer {
 
@@ -63,7 +65,7 @@ public class TemplateTokenizer {
 	/**
 	 * This hashmap contains the different status items
 	 */
-	private static HashMap<Byte, TemplateTokenStatusItem> statusDescriptors;
+	private static Map<Byte, TemplateTokenStatusItem> statusDescriptors;
 
 	/**
 	 * Does the initialization of status decriptors.
@@ -195,7 +197,7 @@ public class TemplateTokenizer {
 	 * @param template The template to parse.
 	 * @return A list of tokens.
 	 */
-	protected static ArrayList<TemplateToken> getTokens(String template) {
+	protected static List<TemplateToken> getTokens(String template) {
 		if (statusDescriptors == null) {
 			initStatusDescriptors();
 		}
@@ -208,7 +210,7 @@ public class TemplateTokenizer {
 	 * @param template The template to parse.
 	 * @return A list of tokens.
 	 */
-	private static ArrayList<TemplateToken> tokenizeTemplate(String template) {
+	private static List<TemplateToken> tokenizeTemplate(String template) {
 		if (template == null) {
 			return null;
 		}

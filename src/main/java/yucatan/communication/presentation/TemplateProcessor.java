@@ -1,6 +1,6 @@
 package yucatan.communication.presentation;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * This class implements the yucatan template processor.
@@ -42,7 +42,7 @@ public final class TemplateProcessor {
 	 * @param templateTokens
 	 * @return
 	 */
-	private static String generateTextParts(final Object dataScope, final ArrayList<TemplateToken> templateTokens) {
+	private static String generateTextParts(final Object dataScope, final List<TemplateToken> templateTokens) {
 		final StringBuilder generatedText = new StringBuilder();
 		TemplatePlaceholder currentPlaceholder = null;
 

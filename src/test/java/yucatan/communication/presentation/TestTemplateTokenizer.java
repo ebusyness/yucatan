@@ -5,7 +5,7 @@ package yucatan.communication.presentation;
 
 import static org.junit.Assert.assertEquals;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
@@ -28,7 +28,7 @@ public class TestTemplateTokenizer {
 
 		// same test string but this time have a look at the tokens
 		// * call getTokens() -> analyze tokens
-		ArrayList<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
+		List<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
 		TemplateToken token0 = tokens.get(0);
 		TemplateToken token1 = tokens.get(1);
 		TemplateToken token2 = tokens.get(2);
@@ -69,7 +69,7 @@ public class TestTemplateTokenizer {
 
 		// same test string but this time have a look at the tokens
 		// * getTokens -> analyze tokens
-		ArrayList<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
+		List<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
 		TemplateToken token0 = tokens.get(0);
 		TemplateToken token1 = tokens.get(1);
 		TemplateToken token2 = tokens.get(2);
@@ -108,7 +108,7 @@ public class TestTemplateTokenizer {
 
 		// same test string but this time have a look at the tokens
 		// * getTokens -> analyze tokens
-		ArrayList<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
+		List<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
 		TemplateToken token0 = tokens.get(0);
 		TemplateToken token1 = tokens.get(1);
 		TemplateToken token2 = tokens.get(2);
@@ -150,7 +150,7 @@ public class TestTemplateTokenizer {
 
 		// same test string but this time have a look at the tokens
 		// * getTokens -> analyze tokens
-		ArrayList<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
+		List<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
 		TemplateToken token0 = tokens.get(0);
 		TemplateToken token1 = tokens.get(1);
 		TemplateToken token2 = tokens.get(2);
@@ -191,7 +191,7 @@ public class TestTemplateTokenizer {
 
 		// same test string but this time have a look at the tokens
 		// * getTokens -> analyze tokens
-		ArrayList<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
+		List<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
 		TemplateToken token0 = tokens.get(0);
 		TemplateToken token1 = tokens.get(1);
 		TemplateToken token2 = tokens.get(2);
@@ -218,7 +218,7 @@ public class TestTemplateTokenizer {
 
 		// same test string but this time have a look at the tokens
 		// * getTokens -> analyze tokens
-		ArrayList<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
+		List<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
 		TemplateToken token0 = tokens.get(0);
 		TemplateToken token1 = tokens.get(1);
 		TemplateToken token2 = tokens.get(2);
@@ -253,7 +253,7 @@ public class TestTemplateTokenizer {
 
 		// same test string but this time have a look at the tokens
 		// * getTokens -> analyze tokens
-		ArrayList<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
+		List<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
 		TemplateToken token0 = tokens.get(0);
 		TemplateToken token1 = tokens.get(1);
 		TemplateToken token2 = tokens.get(2);
@@ -291,7 +291,7 @@ public class TestTemplateTokenizer {
 
 		// same test string but this time have a look at the tokens
 		// * getTokens -> analyze tokens
-		ArrayList<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
+		List<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
 		TemplateToken token0 = tokens.get(0);
 		TemplateToken token1 = tokens.get(1);
 		TemplateToken token2 = tokens.get(2);
@@ -329,7 +329,7 @@ public class TestTemplateTokenizer {
 
 		// same test string but this time have a look at the tokens
 		// * getTokens -> analyze tokens
-		ArrayList<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
+		List<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
 		TemplateToken token0 = tokens.get(0);
 		TemplateToken token1 = tokens.get(1);
 		TemplateToken token2 = tokens.get(2);
@@ -367,7 +367,7 @@ public class TestTemplateTokenizer {
 
 		// same test string but this time have a look at the tokens
 		// * getTokens -> analyze tokens
-		ArrayList<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
+		List<TemplateToken> tokens = TemplateTokenizer.getTokens(template);
 		TemplateToken token0 = tokens.get(0);
 		TemplateToken token1 = tokens.get(1);
 		TemplateToken token2 = tokens.get(2);
