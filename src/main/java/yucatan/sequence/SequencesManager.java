@@ -23,32 +23,32 @@ import yucatan.sequence.generated.XmlTypeSequencesList;
  * The SequencesManager provides methods to register sequence and provide acces to them.
  * 
  */
-public class SequencesManager {
+final class SequencesManager {
 
 	/**
 	 * Sequence found.
 	 */
-	public final static String SEQUENCE_FOUND = "SEQUENCE_FOUND";
+	public static final String SEQUENCE_FOUND = "SEQUENCE_FOUND";
 
 	/**
 	 * Sequence not found.
 	 */
-	public final static String SEQUENCE_FILE_NOT_FOUND = "SEQUENCE_FILE_NOT_FOUND";
+	public static final String SEQUENCE_FILE_NOT_FOUND = "SEQUENCE_FILE_NOT_FOUND";
 
 	/**
 	 * Sequence file format error.
 	 */
-	public final static String SEQUENCE_FORMAT_ERROR = "SEQUENCE_FORMAT_ERROR";
+	public static final String SEQUENCE_FORMAT_ERROR = "SEQUENCE_FORMAT_ERROR";
 
 	/**
 	 * Sequence file format error.
 	 */
-	public final static String SEQUENCE_STREAMCLOSE_ERROR = "SEQUENCE_STREAMCLOSE_ERROR";
+	public static final String SEQUENCE_STREAMCLOSE_ERROR = "SEQUENCE_STREAMCLOSE_ERROR";
 
 	/**
 	 * The file name ending for sequences files.
 	 */
-	private final static String FILENAME_ENDING = ".sequences.xml";
+	private static final String FILENAME_ENDING = ".sequences.xml";
 
 	/**
 	 * HashMap of registered sequences.
@@ -58,7 +58,7 @@ public class SequencesManager {
 	/**
 	 * The log4j logger of this class.
 	 */
-	static Logger log = Logger.getLogger(SequencesManager.class);
+	private static Logger log = Logger.getLogger(SequencesManager.class);
 
 	/**
 	 * Gets the sequence from sequences cache.
@@ -76,8 +76,7 @@ public class SequencesManager {
 		if (sequenceDeclaration == null) {
 			return null;
 		}
-		List<XmlTypeCommand> commandsDeclaration = sequenceDeclaration.getCommand();
-		return commandsDeclaration;
+		return sequenceDeclaration.getCommand();
 	}
 
 	/**

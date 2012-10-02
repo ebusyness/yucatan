@@ -92,7 +92,7 @@ public abstract class TemplatePlaceholder {
 	 * @param token The token to add
 	 * @throws IllegalStateException
 	 */
-	public void addToken(TemplateToken token) throws IllegalStateException {
+	public void addToken(TemplateToken token) {
 		if (isClosed()) {
 			throw new IllegalStateException("The current placeholder is already closed. It is not possible to add more tokens.");
 		}
@@ -135,7 +135,7 @@ public abstract class TemplatePlaceholder {
 	/**
 	 * @return The rendered Placeholder
 	 */
-	abstract public String doRender();
+	public abstract String doRender();
 
 	@Override
 	public String toString() {
@@ -147,7 +147,7 @@ public abstract class TemplatePlaceholder {
 	 * 
 	 * @throws IllegalStateException
 	 */
-	protected void close() throws IllegalStateException {
+	protected void close() {
 		if (!isValid()) {
 			throw new IllegalStateException("The current placeholder is in an invalid state. An expected TemplateToken is missing.");
 		} else {

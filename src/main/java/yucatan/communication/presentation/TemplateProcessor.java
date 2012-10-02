@@ -14,7 +14,7 @@ import java.util.List;
  * <li>${&#64;list(myObject.myProperty)}</li>
  * </ul>
  */
-public final class TemplateProcessor {
+final class TemplateProcessor {
 
 	/**
 	 * Template render method. This method may be called recursively.

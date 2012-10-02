@@ -89,7 +89,7 @@ public class TemplateTokenStatusItem {
 	@Override
 	public String toString() {
 		String output = "{";
-		String expectedC = this.nextExpectsExplicitChar == true ? "'" + this.nextExpectedChar + "'" : "<undefined>";
+		String expectedC = this.nextExpectsExplicitChar == true ? "'" + nextExpectedChar + "'" : "<undefined>";
 		output += "nextExpectedChar:" + expectedC + ",";
 		output += "nextExpectsExplicitChar:" + this.nextExpectsExplicitChar + ",";
 		output += "successStatus:" + this.successStatus + ",";
@@ -104,7 +104,6 @@ public class TemplateTokenStatusItem {
 				output += this.nextStatus[i];
 			}
 			output += "],";
-			;
 		} else {
 			output += "null,";
 		}

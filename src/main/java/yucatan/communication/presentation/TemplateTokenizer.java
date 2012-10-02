@@ -5,7 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class TemplateTokenizer {
+class TemplateTokenizer {
 
 	/**
 	 * Indicates that the status is not subject to change.
@@ -274,10 +274,6 @@ public class TemplateTokenizer {
 
 			// store last status
 			lastStatus = currentStatus;
-
-			// for debugging purposes
-			// System.out.println(c + " " + TemplateTokenStatusItem.inspectProperties(currentStatus) + "  i=" + i + "  cs=" + startPositionCurrentToken + "  ens="
-			// + startPositionNewToken);
 
 			// check next expected char
 			if (currentStatus.nextExpectsExplicitChar && currentStatus.nextExpectedChar == c) {
