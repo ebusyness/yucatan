@@ -33,8 +33,8 @@ public class TestSequencesManager {
 		// correct format
 		Assert.assertEquals(SequencesManager.SEQUENCE_FOUND, SequencesManager.registerSequenceCollection("category", "yucatan.sequences"));
 
-		// non declared attributes will be ignored
-		Assert.assertEquals(SequencesManager.SEQUENCE_FOUND, SequencesManager.registerSequenceCollection("ignoredinvalidattribute", "yucatan.sequences"));
+		// non declared attributes are invalid
+		Assert.assertEquals(SequencesManager.SEQUENCE_FORMAT_ERROR, SequencesManager.registerSequenceCollection("ignoredinvalidattribute", "yucatan.sequences"));
 
 		// test number of registered commands
 		List<XmlTypeCommand> commandsDeclaration = SequencesManager.getSequence("category-show");

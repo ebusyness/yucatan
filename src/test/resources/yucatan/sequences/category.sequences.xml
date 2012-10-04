@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequences id="category">
+<sequences id="category" xmlns="http://yucatan/sequence/generated">
 	<sequence id="show">
 		<command name="yucatan.category.ModifyCategoryCommand" position="20.00" />
 		<command name="yucatan.category.GetCategoryCommand" position="10.00" />
