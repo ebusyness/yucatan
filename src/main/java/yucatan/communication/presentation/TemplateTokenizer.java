@@ -119,7 +119,7 @@ class TemplateTokenizer {
 		placeholderChar2.nextExpectsExplicitChar = true;
 		placeholderChar2.successStatus = PLACHOLDER_STATUS_ACTION_STARTED;
 		placeholderChar2.failStatus = PLACHOLDER_STATUS_STOPPED_CREATENEW;
-		placeholderChar2.revaluateOnfail = true;
+		placeholderChar2.reevaluateOnfail = true;
 		statusDescriptors.put(PLACHOLDER_STATUS_OPENINGCHAR2, placeholderChar2);
 
 		// == PLACHOLDER_STATUS_ACTION_STARTED ==
@@ -228,9 +228,9 @@ class TemplateTokenizer {
 
 		for (int i = 0, n = template.length(); i < n; i++) {
 
-			// if the lastStatus signaled an revaluateOnfail we have to go back to the last character
+			// if the lastStatus signaled an reevaluateOnfail we have to go back to the last character
 			// but this time with an other status item (so we can detect other expected characters)
-			if (lastStatus.revaluateOnfail && hasFailed) {
+			if (lastStatus.reevaluateOnfail && hasFailed) {
 				i--;
 			}
 

@@ -43,7 +43,7 @@ public class TemplateTokenStatusItem {
 	 * This indicates that the current character will be reevaluated with an other status item if the pattern fail. A status change is expected. (Be aware of cyclic dependencies
 	 * when you use this feature)
 	 */
-	public boolean revaluateOnfail = false;
+	public boolean reevaluateOnfail = false;
 
 	/**
 	 * Set a new start position at the current position.
@@ -120,7 +120,7 @@ public class TemplateTokenStatusItem {
 		} else {
 			output += "null,";
 		}
-		output += "revaluateOnfail:" + this.revaluateOnfail + ",";
+		output += "reevaluateOnfail:" + this.reevaluateOnfail + ",";
 		output += "startNewToken:" + this.startNewToken + ",";
 		output += "startNewFromPrevious:" + this.startNewFromPrevious + ",";
 		output += "nextStartNewTokenBlocked:" + this.nextStartNewTokenBlocked + ",";

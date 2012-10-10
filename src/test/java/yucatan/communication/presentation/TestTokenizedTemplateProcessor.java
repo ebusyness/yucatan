@@ -13,7 +13,7 @@ import org.junit.Test;
  * @author Samuel
  * 
  */
-public class TestTemplateProcessor {
+public class TestTokenizedTemplateProcessor {
 
 	public static HashMap<String, Object> getTestdata() {
 		HashMap<String, String> otherScope = new HashMap<String, String>();
@@ -26,7 +26,7 @@ public class TestTemplateProcessor {
 	}
 
 	/**
-	 * Test method for {@link yucatan.communication.presentation.TemplateProcessor#doRender(java.lang.Object, java.lang.String)}.
+	 * Test method for {@link yucatan.communication.presentation.TokenizedTemplateProcessor#doRender(java.lang.Object, java.lang.String)}.
 	 */
 	@Test
 	public void testDoRenderStringPlaceholdersNull() {
@@ -36,14 +36,16 @@ public class TestTemplateProcessor {
 		// - another placeholder inbetween
 		// * call doRender() -> general expected result
 		String template = "<html><body><h1>${@data(key1)}</h1><br />${@data(key2)}";
-		assertEquals("<html><body><h1></h1><br />", TemplateProcessor.doRender(new Object(), template));
+
+		TemplateProcessor tp = new TokenizedTemplateProcessor();
+		assertEquals("<html><body><h1></h1><br />", tp.doRender(new Object(), template));
 
 		template = "<html><body><h1>${@data(key1)}</h1><h1>${@data(otherscope.key1)}</h1><p>${@data(otherscope.key1)}</p><br />${@data(key2)}";
-		assertEquals("<html><body><h1></h1><h1></h1><p></p><br />", TemplateProcessor.doRender(new Object(), template));
+		assertEquals("<html><body><h1></h1><h1></h1><p></p><br />", tp.doRender(new Object(), template));
 	}
 
 	/**
-	 * Test method for {@link yucatan.communication.presentation.TemplateProcessor#doRender(java.lang.Object, java.lang.String)}.
+	 * Test method for {@link yucatan.communication.presentation.TokenizedTemplateProcessor#doRender(java.lang.Object, java.lang.String)}.
 	 */
 	@Test
 	public void testDoRenderStringPlaceholders1() {
@@ -55,13 +57,14 @@ public class TestTemplateProcessor {
 		String template = "<html><body><h1>${@data(key1)}</h1><br />${@data(otherscope.key1)}";
 
 		// testdata
-		HashMap<String, Object> dataScope = TestTemplateProcessor.getTestdata();
+		HashMap<String, Object> dataScope = TestTokenizedTemplateProcessor.getTestdata();
 
-		assertEquals("<html><body><h1>Welcome</h1><br />other scope welcome", TemplateProcessor.doRender(dataScope, template));
+		TemplateProcessor tp = new TokenizedTemplateProcessor();
+		assertEquals("<html><body><h1>Welcome</h1><br />other scope welcome", tp.doRender(dataScope, template));
 	}
 
 	/**
-	 * Test method for {@link yucatan.communication.presentation.TemplateProcessor#doRender(java.lang.Object, java.lang.String)}.
+	 * Test method for {@link yucatan.communication.presentation.TokenizedTemplateProcessor#doRender(java.lang.Object, java.lang.String)}.
 	 */
 	@Test
 	public void testDoRenderSimplePlaceholders2() {
@@ -72,13 +75,14 @@ public class TestTemplateProcessor {
 		String template = "${@data(otherscope.key1)}<html><ul>${@data(key2)}";
 
 		// testdata
-		HashMap<String, Object> dataScope = TestTemplateProcessor.getTestdata();
+		HashMap<String, Object> dataScope = TestTokenizedTemplateProcessor.getTestdata();
 
-		assertEquals("other scope welcome<html><ul>List", TemplateProcessor.doRender(dataScope, template));
+		TemplateProcessor tp = new TokenizedTemplateProcessor();
+		assertEquals("other scope welcome<html><ul>List", tp.doRender(dataScope, template));
 	}
 
 	/**
-	 * Test method for {@link yucatan.communication.presentation.TemplateProcessor#doRender(java.lang.Object, java.lang.String)}.
+	 * Test method for {@link yucatan.communication.presentation.TokenizedTemplateProcessor#doRender(java.lang.Object, java.lang.String)}.
 	 */
 	@Test
 	public void testDoRenderSimplePlaceholders3() {
@@ -88,9 +92,10 @@ public class TestTemplateProcessor {
 		String template = "<html><body><h1>${@data(otherscope.key1)}${@data(key1)}</h1><ul>";
 
 		// testdata
-		HashMap<String, Object> dataScope = TestTemplateProcessor.getTestdata();
+		HashMap<String, Object> dataScope = TestTokenizedTemplateProcessor.getTestdata();
 
-		assertEquals("<html><body><h1>other scope welcomeWelcome</h1><ul>", TemplateProcessor.doRender(dataScope, template));
+		TemplateProcessor tp = new TokenizedTemplateProcessor();
+		assertEquals("<html><body><h1>other scope welcomeWelcome</h1><ul>", tp.doRender(dataScope, template));
 
 	}
 }

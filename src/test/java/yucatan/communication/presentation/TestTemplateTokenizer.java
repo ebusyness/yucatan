@@ -15,7 +15,7 @@ import org.junit.Test;
 public class TestTemplateTokenizer {
 
 	/**
-	 * Test method for {@link yucatan.communication.presentation.TemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
+	 * Test method for {@link yucatan.communication.presentation.TokenizedTemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
 	 */
 	@Test
 	public void testGetTokensSimplePlaceholders1() {
@@ -57,7 +57,7 @@ public class TestTemplateTokenizer {
 
 
 	/**
-	 * Test method for {@link yucatan.communication.presentation.TemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
+	 * Test method for {@link yucatan.communication.presentation.TokenizedTemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
 	 */
 	@Test
 	public void testGetTokensSimplePlaceholders2() {
@@ -97,7 +97,7 @@ public class TestTemplateTokenizer {
 	}
 
 	/**
-	 * Test method for {@link yucatan.communication.presentation.TemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
+	 * Test method for {@link yucatan.communication.presentation.TokenizedTemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
 	 */
 	@Test
 	public void testGetTokensSimplePlaceholders3() {
@@ -140,7 +140,7 @@ public class TestTemplateTokenizer {
 	}
 
 	/**
-	 * Test method for {@link yucatan.communication.presentation.TemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
+	 * Test method for {@link yucatan.communication.presentation.TokenizedTemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
 	 */
 	@Test
 	public void testGetTokensSimplePlaceholders4() {
@@ -182,7 +182,7 @@ public class TestTemplateTokenizer {
 	}
 
 	/**
-	 * Test method for {@link yucatan.communication.presentation.TemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
+	 * Test method for {@link yucatan.communication.presentation.TokenizedTemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
 	 */
 	@Test
 	public void testGetTokensSimplePlaceholders5() {
@@ -209,7 +209,7 @@ public class TestTemplateTokenizer {
 	}
 
 	/**
-	 * Test method for {@link yucatan.communication.presentation.TemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
+	 * Test method for {@link yucatan.communication.presentation.TokenizedTemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
 	 */
 	@Test
 	public void testGetTokensSimplePlaceholders6() {
@@ -244,7 +244,7 @@ public class TestTemplateTokenizer {
 	}
 
 	/**
-	 * Test method for {@link yucatan.communication.presentation.TemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
+	 * Test method for {@link yucatan.communication.presentation.TokenizedTemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
 	 */
 	@Test
 	public void testGetTokensSimplePlaceholders7() {
@@ -282,7 +282,7 @@ public class TestTemplateTokenizer {
 	}
 
 	/**
-	 * Test method for {@link yucatan.communication.presentation.TemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
+	 * Test method for {@link yucatan.communication.presentation.TokenizedTemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
 	 */
 	@Test
 	public void testGetTokensSimplePlaceholders8() {
@@ -320,7 +320,7 @@ public class TestTemplateTokenizer {
 	}
 
 	/**
-	 * Test method for {@link yucatan.communication.presentation.TemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
+	 * Test method for {@link yucatan.communication.presentation.TokenizedTemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
 	 */
 	@Test
 	public void testGetTokensSimplePlaceholders9() {
@@ -358,7 +358,7 @@ public class TestTemplateTokenizer {
 	}
 
 	/**
-	 * Test method for {@link yucatan.communication.presentation.TemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
+	 * Test method for {@link yucatan.communication.presentation.TokenizedTemplateProcessor#getTokens(java.lang.Object, java.lang.String)}.
 	 */
 	@Test
 	public void testGetTokensSimplePlaceholders10() {
