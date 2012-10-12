@@ -1,26 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<sequences id="category" xmlns="http://yucatan/sequence/generated">
+<sequences id="category" xmlns="http://yucatan/sequence/generated" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<sequence id="show">
-		<command name="yucatan.category.ModifyCategoryCommand" position="20.00" />
-		<command name="yucatan.category.GetCategoryCommand" position="10.00" />
+		<command name="yucatan.category.ModifyCategoryCommand" position="20.00"/>
+		<command name="yucatan.category.GetCategoryCommand" position="10.00"/>
 	</sequence>
 	<sequence id="commandexecutionerror">
-		<command name="yucatan.category.GetCategoryCommand" position="10.00" />
-		<command name="yucatan.category.ExecutionErrorCommand" position="20.00" />
-		<command name="yucatan.category.ModifyCategoryCommand" position="30.00" />
+		<command name="yucatan.category.GetCategoryCommand" position="10.00"/>
+		<command name="yucatan.category.ExecutionErrorCommand" position="20.00"/>
+		<command name="yucatan.category.ModifyCategoryCommand" position="30.00"/>
 	</sequence>
 	<sequence id="commandnotfound">
-		<command name="CommandNotFound" position="10.00" />
+		<command name="CommandNotFound" position="10.00"/>
 	</sequence>
 	<sequence id="insecurecast">
-		<command name="yucatan.category.InsecureCastCommand" position="10.00" />
+		<command name="yucatan.category.InsecureCastCommand" position="10.00"/>
 	</sequence>
 	<sequence id="noexecutemethod">
-		<command name="yucatan.category.NoExecuteMethodCommand" position="10.00" />
-	</sequence>	
+		<command name="yucatan.category.NoExecuteMethodCommand" position="10.00"/>
+	</sequence>
 	<sequence id="illegalargument">
-		<command name="yucatan.category.IllegalArgumentCommand" position="10.00" />
-	</sequence>	
-	
-</sequences>
+		<command name="yucatan.category.IllegalArgumentCommand" position="10.00"/>
+	</sequence>
 
+</sequences>
